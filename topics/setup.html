@@ -1,0 +1,312 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Setting up the application &mdash; django-change-email 0.1.1.dev documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1.dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="django-change-email 0.1.1.dev documentation" href="../index.html" />
+    <link rel="next" title="Using the application" href="using.html" />
+    <link rel="prev" title="Installation" href="install.html" />
+ 
+<script type="text/javascript" src="../templatebuiltins.js"></script>
+<script type="text/javascript">
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);
+</script>
+
+  </head>
+  <body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">django-change-email 0.1.1.dev documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="install.html" title="Installation">previous</a> 
+     |
+    <a title="django-change-email 0.1.1.dev documentation" href="../index.html" accesskey="U">up</a>
+   |
+    <a href="using.html" title="Using the application">next</a> &raquo;</div>
+    </div>
+    
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="topics-setup">
+            
+  <div class="section" id="setting-up-the-application">
+<span id="setup"></span><h1>Setting up the application<a class="headerlink" href="#setting-up-the-application" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="required-templates">
+<span id="setup-templates"></span><h2>Required templates<a class="headerlink" href="#required-templates" title="Permalink to this headline">¶</a></h2>
+<p>To use <a class="reference internal" href="../api/password_policies.views.html#api-views"><em>the views in django-password-policies</em></a> the same
+templates used by the views in <tt class="xref py py-mod docutils literal"><span class="pre">django.contrib.auth</span></tt> can be used,
+except the templates to send the password reset email.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Because <tt class="docutils literal"><span class="pre">django-password-policies</span></tt> is intended to be highly reusable it does
+not include any other templates than the ones used for testing the
+application. It is left to programmers using <tt class="docutils literal"><span class="pre">django-password-policies</span></tt> to
+create templates for projects as needed.</p>
+</div>
+<ul>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">registration/password_change_done.html</span></tt></dt>
+<dd><p class="first last">Used in the view <a class="reference internal" href="../api/password_policies.views.html#std:view-PasswordChangeDoneView"><tt class="xref std std-view docutils literal"><span class="pre">PasswordChangeDoneView</span></tt></a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">registration/password_change_form.html</span></tt></dt>
+<dd><p class="first">Used in the view <a class="reference internal" href="../api/password_policies.views.html#std:view-PasswordChangeFormView"><tt class="xref std std-view docutils literal"><span class="pre">PasswordChangeFormView</span></tt></a>.</p>
+<p>Has the following context variables:</p>
+<ul class="last">
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">form</span></tt></dt>
+<dd><p class="first last">The form used to change the user&#8217;s password.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">next</span></tt></dt>
+<dd><p class="first">If a password change is forced the view will remember the URL the user
+wanted to visit before being redirect to this view.
+By default, the path that the user should be redirected to upon
+successful password change is stored in a query string parameter called
+&#8220;next&#8221;.</p>
+<p class="last">Note that if you provide a value to redirect_field_name, you will most
+likely need to customize your login template as well, since the template
+context variable which stores the redirect path will use the value of
+redirect_field_name as its key rather than &#8220;next&#8221; (the default).</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">registration/password_reset_complete.html</span></tt></dt>
+<dd><p class="first last">Used in the view <a class="reference internal" href="../api/password_policies.views.html#std:view-PasswordResetCompleteView"><tt class="xref std std-view docutils literal"><span class="pre">PasswordResetCompleteView</span></tt></a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">registration/password_reset_confirm.html</span></tt></dt>
+<dd><p class="first last">Used in the view <a class="reference internal" href="../api/password_policies.views.html#std:view-PasswordResetConfirmView"><tt class="xref std std-view docutils literal"><span class="pre">PasswordResetConfirmView</span></tt></a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">registration/password_reset_done.html</span></tt></dt>
+<dd><p class="first last">Used in the view <a class="reference internal" href="../api/password_policies.views.html#std:view-PasswordResetDoneView"><tt class="xref std std-view docutils literal"><span class="pre">PasswordResetDoneView</span></tt></a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">registration/password_reset_email.html</span></tt></dt>
+<dd><p class="first last">Used in the form <a class="reference internal" href="../api/password_policies.forms.html#std:form-PasswordResetForm"><tt class="xref std std-form docutils literal"><span class="pre">PasswordResetForm</span></tt></a> to send the password reset email.
+This template is used to generate an HTML-attachment for the email.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">registration/password_reset_email.txt</span></tt></dt>
+<dd><p class="first last">Used in the form <a class="reference internal" href="../api/password_policies.forms.html#std:form-PasswordResetForm"><tt class="xref std std-form docutils literal"><span class="pre">PasswordResetForm</span></tt></a> to send the password reset email.
+This template is used to generate the message body of the email.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">registration/password_reset_form.html</span></tt></dt>
+<dd><p class="first last">Used in the view <a class="reference internal" href="../api/password_policies.views.html#std:view-PasswordResetFormView"><tt class="xref std std-view docutils literal"><span class="pre">PasswordResetFormView</span></tt></a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">registration/password_reset_subject.txt</span></tt></dt>
+<dd><p class="first last">Used in the form <a class="reference internal" href="../api/password_policies.forms.html#std:form-PasswordResetForm"><tt class="xref std std-form docutils literal"><span class="pre">PasswordResetForm</span></tt></a> to send the password reset email.
+This template is used to generate the subject of the email.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Minimal example templates can be found inside the tests module of
+<tt class="docutils literal"><span class="pre">django-password-policies</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="setting-up-urls">
+<span id="setup-urls"></span><h2>Setting up URLs<a class="headerlink" href="#setting-up-urls" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">django-password-policies</span></tt> includes a Django <tt class="docutils literal"><span class="pre">URLconf</span></tt> which sets up URL patterns
+for <a class="reference internal" href="../api/password_policies.views.html#api-views"><em>the views in django-password-policies</em></a>. This <tt class="docutils literal"><span class="pre">URLconf</span></tt> can be
+found at <tt class="docutils literal"><span class="pre">password_policies.urls</span></tt>, and so can simply be included in a project&#8217;s
+root URL configuration. For example, to place the URLs under the prefix
+<tt class="docutils literal"><span class="pre">/password/</span></tt>, one could add the following to a project&#8217;s root <tt class="docutils literal"><span class="pre">URLconf</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="s">r&#39;^password/&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s">&#39;password_policies.urls&#39;</span><span class="p">)),</span>
+</pre></div>
+</div>
+<p>Users would then be able to change their password by visiting the URL
+<tt class="docutils literal"><span class="pre">/password/change/</span></tt> or to reset their password by visiting the URL
+<tt class="docutils literal"><span class="pre">/password/reset/</span></tt>.</p>
+</div>
+<div class="section" id="adding-the-app-to-the-installed-applications">
+<span id="setup-add-to-apps"></span><h2>Adding the app to the installed applications<a class="headerlink" href="#adding-the-app-to-the-installed-applications" title="Permalink to this headline">¶</a></h2>
+<p>To use <tt class="docutils literal"><span class="pre">django-password-policies</span></tt> in a Django project add <tt class="docutils literal"><span class="pre">password_policies</span></tt> to the
+<tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt> setting of a project.</p>
+<p>For example, one might have something like the following in a Django settings
+file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&#39;django.contrib.auth&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.sessions&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.sites&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.admin&#39;</span><span class="p">,</span>
+    <span class="s">&#39;django.contrib.messages&#39;</span><span class="p">,</span>
+    <span class="s">&#39;password_policies&#39;</span><span class="p">,</span>
+    <span class="c"># ...other installed applications...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-the-database-tables">
+<span id="setup-create-db-tables"></span><h2>Creating the database tables<a class="headerlink" href="#creating-the-database-tables" title="Permalink to this headline">¶</a></h2>
+<p>To create the database tables needed by <tt class="docutils literal"><span class="pre">django-password-policies</span></tt> simply run
+the following inside a project&#8217;s root directory:</p>
+<div class="highlight-python"><pre>$ python manage.py syncdb</pre>
+</div>
+</div>
+</div>
+
+
+          </div>         
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Setting up the application</a><ul>
+<li><a class="reference internal" href="#required-templates">Required templates</a></li>
+<li><a class="reference internal" href="#setting-up-urls">Setting up URLs</a></li>
+<li><a class="reference internal" href="#adding-the-app-to-the-installed-applications">Adding the app to the installed applications</a></li>
+<li><a class="reference internal" href="#creating-the-database-tables">Creating the database tables</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>Browse</h3>
+  <ul>
+    
+      <li>Prev: <a href="install.html">Installation</a></li>
+    
+    
+      <li>Next: <a href="using.html">Using the application</a></li>
+    
+  </ul>
+  <h3>You are here:</h3>
+  <ul>
+      <li>
+        <a href="../index.html">django-change-email 0.1.1.dev documentation</a>
+        
+        <ul><li>Setting up the application</li></ul>
+        
+      </li>
+  </ul>  
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/topics/setup.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+          </div> 
+        
+      
+    </div>
+    
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="install.html" title="Installation">previous</a> 
+     |
+    <a title="django-change-email 0.1.1.dev documentation" href="../index.html" accesskey="U">up</a>
+   |
+    <a href="using.html" title="Using the application">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>
