@@ -19,7 +19,7 @@ Documentation
 
 A detailled documentation is available on the  `GitHub Pages`_.
 
-.. literalinclude:: docs/overview.rst
+.. include:: docs/overview.rst
 
 .. _`GitHub Pages`: http://tarak.github.com/django-password-policies
 .. _`Django`: https://www.djangoproject.com/
