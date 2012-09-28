@@ -16,13 +16,11 @@ Models
 
    .. attribute:: password
 
-       Required. The new email address.
+       Required. The encrypted password.
 
    .. attribute:: user
 
-       Required. The :class:`~django.contrib.auth.models.User` that has
-       requested the change of email address. Must be set by the view creating
-       an email address change request.
+       Required. The :class:`~django.contrib.auth.models.User`.
 
    .. attribute:: created
 

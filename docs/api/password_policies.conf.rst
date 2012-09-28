@@ -1,4 +1,4 @@
-.. _api-context-processors:
+.. _api-settings:
 
 Settings
 ========
