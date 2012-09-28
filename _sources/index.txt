@@ -1,8 +1,8 @@
 .. _index:
 
-========================================
+=============================================
  django-password-policies documentation index
-========================================
+=============================================
 
 A detailled overview of the features and workflow of this application, along
 with instructions on how to install and set it up can be found here:
