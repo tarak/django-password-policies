@@ -7,13 +7,13 @@ class Settings(AppSettings):
     """
 Default settings for django-password-policies.
 """
-    #: A list of raw strings representing paths to ignore
-    #: while checking if a user has to change his/her password.
-    PASSWORD_CHANGE_MIDDLEWARE_EXCLUDED_PATHS = []
     #: Determines wether the :middleware:`PasswordChangeMiddleware`
     #: should ignore the logout views, allowing the user to log out
     #: even if a password change is required.
     PASSWORD_CHANGE_MIDDLEWARE_ALLOW_LOGOUT = True
+    #: A list of raw strings representing paths to ignore
+    #: while checking if a user has to change his/her password.
+    PASSWORD_CHANGE_MIDDLEWARE_EXCLUDED_PATHS = []
     #: Determines after how many seconds a check shall
     #: be performed if the user's password has expired.
     #:
@@ -66,6 +66,10 @@ Used by the :validator:`DictionaryValidator`.
     #:
     #: Used by the :validator:`ConsecutiveCountValidator`.
     PASSWORD_MAX_CONSECUTIVE = 3
+    #: Specifies the maximum length for passwords.
+    #:
+    #: Used by the :formfield:`PasswordPoliciesField`.
+    PASSWORD_MAX_LENGTH = None
     #: Specifies the minimum entropy of long passwords
     #: (len(password) >= 100).
     #:
@@ -76,10 +80,6 @@ Used by the :validator:`DictionaryValidator`.
     #:
     #: Used by the :validator:`EntropyValidator`.
     PASSWORD_MIN_ENTROPY_SHORT = 0.8
-    #: Specifies the maximum length for passwords.
-    #:
-    #: Used by the :formfield:`PasswordPoliciesField`.
-    PASSWORD_MAX_LENGTH = None
     #: Specifies the minimum length for passwords.
     #:
     #: Used by the :formfield:`PasswordPoliciesField`.
