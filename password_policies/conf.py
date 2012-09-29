@@ -37,7 +37,7 @@ Default settings for django-password-policies.
 Specifies the location of a dictionary (file with one
 word per line). Could be "/usr/share/dict/words".
 
-Used by the validator:`DictionaryValidator`.
+Used by the :validator:`DictionaryValidator`.
 """
     #: A minimum distance of the difference between old and
     #: new password. A positive integer. Values greater

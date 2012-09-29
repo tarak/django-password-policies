@@ -12,6 +12,27 @@ Forcing password changes
 when user passwords expire. To activate forced password changes for a project
 different settings need to be set:
 
+.. _password-change-requirements:
+
+------------
+Requirements
+------------
+
+To use the password change feature Django's authentication and sessions
+framework is used. It must be set up correctly for the middleware and the
+context processor to work::
+
+    INSTALLED_APPS = (
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.sites',
+        'password_policies',
+    )
+
+For more informations on the authentication and sessions framework please
+consult the `Django documentation`_.
+
 .. _password-change-expiry:
 
 -----------------------
@@ -58,14 +79,13 @@ Using the context processor
 variable to the context. To use it add it to the list of
 ``TEMPLATE_CONTEXT_PROCESSORS`` in a project's settings file::
 
-
-    TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
-        "django.core.context_processors.debug",
-        "django.core.context_processors.i18n",
-        "django.core.context_processors.media",
-        "django.core.context_processors.static",
-        "django.contrib.messages.context_processors.messages",
-        "password_policies.context_processors.password_status",)
+    TEMPLATE_CONTEXT_PROCESSORS = (
+        'django.contrib.auth.context_processors.auth',
+        'django.core.context_processors.debug',
+        'django.core.context_processors.i18n',
+        'django.contrib.messages.context_processors.messages',
+        'password_policies.context_processors.password_status',
+    )
 
 Then the template for the password change view can display a message if the user
 is required to change his/her password::
@@ -80,3 +100,5 @@ is required to change his/her password::
     <input type="hidden" name="next" value="{{ next }}" />{% endif %}
     <input type="submit" value="Submit" />
     </form>
+
+.. _`Django documentation`: https://docs.djangoproject.com/en/dev/
