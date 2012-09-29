@@ -94,16 +94,35 @@
 version control system. The repository is hosted on <a class="reference external" href="https://github.com/tarak/django-password-policies/">GitHub</a>, so contributing
 is as easy as forking the project and committing back your enhancements.</p>
 <p>Please note the following guidelines for contributing:</p>
-<ul class="simple">
-<li>Contributed code must be written in the existing style. This is
+<ul>
+<li><p class="first">Contributed code must be written in the existing style. This is
 as simple as following the <a class="reference external" href="http://docs.djangoproject.com/en/dev/internals/contributing/#coding-style">Django coding style</a> and (most
-importantly) <a class="reference external" href="http://www.python.org/dev/peps/pep-0008/">PEP 8</a>.</li>
-<li>Contributions must be available on a separately named branch
-based on the latest version of the main branch.</li>
-<li>Run the tests before committing your changes. If your changes
-cause the tests to break, they won&#8217;t be accepted.</li>
-<li>If you are adding new functionality, you must include basic tests
-and documentation.</li>
+importantly) <a class="reference external" href="http://www.python.org/dev/peps/pep-0008/">PEP 8</a>.</p>
+</li>
+<li><p class="first">Contributions must be available on a separately named branch
+based on the latest version of the main branch.</p>
+</li>
+<li><p class="first">Run the tests before committing your changes. If your changes
+cause the tests to break, they won&#8217;t be accepted.</p>
+</li>
+<li><p class="first">If you are adding new functionality, you must include basic tests
+and documentation.</p>
+</li>
+<li><p class="first">If you write tests you should use the included BaseTest and use test
+fixtures:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">password_policies.tests.lib</span> <span class="kn">import</span> <span class="n">BaseTest</span>
+
+<span class="k">class</span> <span class="nc">CustomTest</span><span class="p">(</span><span class="n">BaseTest</span><span class="p">):</span>
+
+    <span class="n">fixtures</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;django_password_policies_custom_fixtures.json&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">test_something</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Documentation must be formatted to be used with <a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a>.</p>
+</li>
 </ul>
 </div>
 
