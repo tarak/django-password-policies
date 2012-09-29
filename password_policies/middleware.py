@@ -24,7 +24,16 @@ password was last changed when the user has or was registered.
     is not taken...
 
 To use this middleware you need to add it to the
-``MIDDLEWARE_CLASSES`` list in a project's settings.
+``MIDDLEWARE_CLASSES`` list in a project's settings::
+
+    MIDDLEWARE_CLASSES = (
+        'django.middleware.common.CommonMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'password_policies.middleware.PasswordChangeMiddleware',
+        # ... other middlewares ...
+    )
 
 .. note::
     The order of this middleware in the stack is important,

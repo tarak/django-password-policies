@@ -1,2 +1,3 @@
 recursive-include password_policies/fixtures *
 recursive-include password_policies/locale *
+recursive-include password_policies/tests/templates *

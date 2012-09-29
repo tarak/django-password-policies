@@ -1,6 +1,9 @@
 django-password-policies
 ========================
 
+``django-password-policies`` is an application for the `Django`_ framework that
+provides unicode-aware password policies on password changes and resets and a
+mechanism to force password changes.
 
 .. _requirements:
 
@@ -18,8 +21,6 @@ Documentation
 =============
 
 A detailled documentation is available on the  `GitHub Pages`_.
-
-.. include:: docs/overview.rst
 
 .. _`GitHub Pages`: http://tarak.github.com/django-password-policies
 .. _`Django`: https://www.djangoproject.com/

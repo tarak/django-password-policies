@@ -15,7 +15,6 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'django.contrib.admin',
     'django.contrib.messages',
     'password_policies',
 )
@@ -31,11 +30,28 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': ':memory:',
         'TEST_NAME': ':memory:',
-        "USER": '',
-        "PASSWORD": '',
-        "PORT": '',
+        'USER': '',
+        'PASSWORD': '',
+        'PORT': '',
     },
 }
+
+MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'password_policies.middleware.PasswordChangeMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.contrib.messages.context_processors.messages',
+    'password_policies.context_processors.password_status',
+)
 
 ROOT_URLCONF = 'password_policies.tests.urls'
 SITE_ID = 1

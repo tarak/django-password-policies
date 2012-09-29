@@ -12,6 +12,16 @@ to the context if the user has authenticated:
     Set to ``True`` if the user has to change his/her password,
     ``False`` otherwise.
 
+To use it add it to the list of ``TEMPLATE_CONTEXT_PROCESSORS``
+in a project's settings file::
+
+    TEMPLATE_CONTEXT_PROCESSORS = (
+        'django.contrib.auth.context_processors.auth',
+        'django.core.context_processors.debug',
+        'django.core.context_processors.i18n',
+        'django.contrib.messages.context_processors.messages',
+        'password_policies.context_processors.password_status',
+    )
 """
     d = {}
     if request.user.is_authenticated():

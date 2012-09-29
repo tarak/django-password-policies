@@ -107,10 +107,9 @@ if set, otherwise the URL to the :class:`PasswordChangeDoneView`.
         return url
 
     def get_context_data(self, **kwargs):
-        context = super(PasswordChangeFormView, self).get_context_data(**kwargs)
         name = self.redirect_field_name
-        context[name] = self.request.REQUEST.get(name, '')
-        return context
+        kwargs[name] = self.request.REQUEST.get(name, '')
+        return super(PasswordChangeFormView, self).get_context_data(**kwargs)
 
 
 class PasswordResetCompleteView(LoggedOutMixin, TemplateView):
@@ -156,7 +155,7 @@ class PasswordResetConfirmView(LoggedOutMixin, FormView):
                 uid_int = base36_to_int(self.uidb36)
                 self.user = User.objects.get(id=uid_int)
             except (ValueError, User.DoesNotExist):
-                pass
+                self.user = None
             else:
                 signer = signing.TimestampSigner()
                 max_age = settings.PASSWORD_RESET_TIMEOUT_DAYS * 24 * 60 * 60
@@ -179,10 +178,9 @@ class PasswordResetConfirmView(LoggedOutMixin, FormView):
         return self.render_to_response(self.get_context_data())
 
     def get_context_data(self, **kwargs):
-        context = super(PasswordResetConfirmView, self).get_context_data(**kwargs)
-        context['user'] = self.user
-        context['validlink'] = self.validlink
-        return context
+        kwargs['user'] = self.user
+        kwargs['validlink'] = self.validlink
+        return super(PasswordResetConfirmView, self).get_context_data(**kwargs)
 
     def get_form(self, form_class):
         return form_class(self.user, **self.get_form_kwargs())
