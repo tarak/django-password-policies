@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="django-password-policies 0.1.0.dev documentation" href="../index.html" />
-    <link rel="next" title="Using the application" href="using.html" />
+    <link rel="next" title="Security" href="security.html" />
     <link rel="prev" title="Installation" href="install.html" />
  
 <script type="text/javascript" src="../templatebuiltins.js"></script>
@@ -80,7 +80,7 @@
      |
     <a title="django-password-policies 0.1.0.dev documentation" href="../index.html" accesskey="U">up</a>
    |
-    <a href="using.html" title="Using the application">next</a> &raquo;</div>
+    <a href="security.html" title="Security">next</a> &raquo;</div>
     </div>
     
     <div id="bd">
@@ -105,14 +105,16 @@ create templates for projects as needed.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><tt class="docutils literal"><span class="pre">registration/password_change_done.html</span></tt></dt>
-<dd><p class="first last">Used in the view <a class="reference internal" href="../api/password_policies.views.html#std:view-PasswordChangeDoneView"><tt class="xref std std-view docutils literal"><span class="pre">PasswordChangeDoneView</span></tt></a>.</p>
+<dd><p class="first">Used in the view <a class="reference internal" href="../api/password_policies.views.html#std:view-PasswordChangeDoneView"><tt class="xref std std-view docutils literal"><span class="pre">PasswordChangeDoneView</span></tt></a>.</p>
+<p class="last">Displays a message that a password change has been completed
+successfully. Has no context variables.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><tt class="docutils literal"><span class="pre">registration/password_change_form.html</span></tt></dt>
 <dd><p class="first">Used in the view <a class="reference internal" href="../api/password_policies.views.html#std:view-PasswordChangeFormView"><tt class="xref std std-view docutils literal"><span class="pre">PasswordChangeFormView</span></tt></a>.</p>
-<p>Has the following context variables:</p>
+<p>Displays the form to change a password. Has the following context variables:</p>
 <ul class="last">
 <li><dl class="first docutils">
 <dt><tt class="docutils literal"><span class="pre">form</span></tt></dt>
@@ -127,10 +129,10 @@ wanted to visit before being redirect to this view.
 By default, the path that the user should be redirected to upon
 successful password change is stored in a query string parameter called
 &#8220;next&#8221;.</p>
-<p class="last">Note that if you provide a value to redirect_field_name, you will most
+<p class="last">Note that if you provide a value to <tt class="docutils literal"><span class="pre">redirect_field_name</span></tt>, you will most
 likely need to customize your login template as well, since the template
 context variable which stores the redirect path will use the value of
-redirect_field_name as its key rather than &#8220;next&#8221; (the default).</p>
+<tt class="docutils literal"><span class="pre">redirect_field_name</span></tt> as its key rather than &#8220;next&#8221; (the default).</p>
 </dd>
 </dl>
 </li>
@@ -140,46 +142,248 @@ redirect_field_name as its key rather than &#8220;next&#8221; (the default).</p>
 </li>
 <li><dl class="first docutils">
 <dt><tt class="docutils literal"><span class="pre">registration/password_reset_complete.html</span></tt></dt>
-<dd><p class="first last">Used in the view <a class="reference internal" href="../api/password_policies.views.html#std:view-PasswordResetCompleteView"><tt class="xref std std-view docutils literal"><span class="pre">PasswordResetCompleteView</span></tt></a>.</p>
+<dd><p class="first">Used in the view <a class="reference internal" href="../api/password_policies.views.html#std:view-PasswordResetCompleteView"><tt class="xref std std-view docutils literal"><span class="pre">PasswordResetCompleteView</span></tt></a>.</p>
+<p>Displays a message that a password reset has been completed
+successfully. Has the following context variables:</p>
+<ul class="last">
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">login_url</span></tt></dt>
+<dd><p class="first last">The URL of the login page.</p>
+</dd>
+</dl>
+</li>
+</ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><tt class="docutils literal"><span class="pre">registration/password_reset_confirm.html</span></tt></dt>
-<dd><p class="first last">Used in the view <a class="reference internal" href="../api/password_policies.views.html#std:view-PasswordResetConfirmView"><tt class="xref std std-view docutils literal"><span class="pre">PasswordResetConfirmView</span></tt></a>.</p>
+<dd><p class="first">Used in the view <a class="reference internal" href="../api/password_policies.views.html#std:view-PasswordResetConfirmView"><tt class="xref std std-view docutils literal"><span class="pre">PasswordResetConfirmView</span></tt></a>.</p>
+<p>Displays the form to reset a password. Has the following context variables:</p>
+<ul class="last">
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">form</span></tt></dt>
+<dd><p class="first last">The form used to reset the user&#8217;s password.</p>
+</dd>
+</dl>
+</li>
+</ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><tt class="docutils literal"><span class="pre">registration/password_reset_done.html</span></tt></dt>
-<dd><p class="first last">Used in the view <a class="reference internal" href="../api/password_policies.views.html#std:view-PasswordResetDoneView"><tt class="xref std std-view docutils literal"><span class="pre">PasswordResetDoneView</span></tt></a>.</p>
+<dd><p class="first">Used in the view <a class="reference internal" href="../api/password_policies.views.html#std:view-PasswordResetDoneView"><tt class="xref std std-view docutils literal"><span class="pre">PasswordResetDoneView</span></tt></a>.</p>
+<p class="last">Displays a message that a password reset has been started and that an email
+with instructions has been sent to the user. Has no context variables.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><tt class="docutils literal"><span class="pre">registration/password_reset_email.html</span></tt></dt>
-<dd><p class="first last">Used in the form <a class="reference internal" href="../api/password_policies.forms.html#std:form-PasswordResetForm"><tt class="xref std std-form docutils literal"><span class="pre">PasswordResetForm</span></tt></a> to send the password reset email.
-This template is used to generate an HTML-attachment for the email.</p>
+<dd><p class="first">Used in the form <a class="reference internal" href="../api/password_policies.forms.html#std:form-PasswordResetForm"><tt class="xref std std-form docutils literal"><span class="pre">PasswordResetForm</span></tt></a> to send the password reset email.</p>
+<p>This template is used to generate an HTML-attachment for the email. Has the
+following context variables:</p>
+<ul class="last">
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">domain</span></tt></dt>
+<dd><p class="first last">The domain name.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">site_name</span></tt></dt>
+<dd><p class="first last">The name of the site.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">protocol</span></tt></dt>
+<dd><p class="first last">The HTTP protocol. Either <tt class="docutils literal"><span class="pre">http</span></tt> or <tt class="docutils literal"><span class="pre">https</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">email</span></tt></dt>
+<dd><p class="first last">The user&#8217;s email address.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">signature</span></tt></dt>
+<dd><p class="first last">The signature token to use in a one-time secret URL.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">timestamp</span></tt></dt>
+<dd><p class="first last">The timestamp token to use in a one-time secret URL.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">uid</span></tt></dt>
+<dd><p class="first last">A base36-encoded string representig the user id.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">user</span></tt></dt>
+<dd><p class="first last">The user instance.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">request</span></tt></dt>
+<dd><p class="first last">The instance of the <tt class="docutils literal"><span class="pre">request</span></tt>.</p>
+</dd>
+</dl>
+</li>
+</ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><tt class="docutils literal"><span class="pre">registration/password_reset_email.txt</span></tt></dt>
-<dd><p class="first last">Used in the form <a class="reference internal" href="../api/password_policies.forms.html#std:form-PasswordResetForm"><tt class="xref std std-form docutils literal"><span class="pre">PasswordResetForm</span></tt></a> to send the password reset email.
-This template is used to generate the message body of the email.</p>
+<dd><p class="first">Used in the form <a class="reference internal" href="../api/password_policies.forms.html#std:form-PasswordResetForm"><tt class="xref std std-form docutils literal"><span class="pre">PasswordResetForm</span></tt></a> to send the password reset email.</p>
+<p>This template is used to generate the message body of the email. Has the
+following context variables:</p>
+<ul class="last">
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">domain</span></tt></dt>
+<dd><p class="first last">The domain name.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">site_name</span></tt></dt>
+<dd><p class="first last">The name of the site.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">protocol</span></tt></dt>
+<dd><p class="first last">The HTTP protocol. Either <tt class="docutils literal"><span class="pre">http</span></tt> or <tt class="docutils literal"><span class="pre">https</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">email</span></tt></dt>
+<dd><p class="first last">The user&#8217;s email address.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">signature</span></tt></dt>
+<dd><p class="first last">The signature token to use in a one-time secret URL.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">timestamp</span></tt></dt>
+<dd><p class="first last">The timestamp token to use in a one-time secret URL.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">uid</span></tt></dt>
+<dd><p class="first last">A base36-encoded string representig the user id.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">user</span></tt></dt>
+<dd><p class="first last">The user instance.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">request</span></tt></dt>
+<dd><p class="first last">The instance of the <tt class="docutils literal"><span class="pre">request</span></tt>.</p>
+</dd>
+</dl>
+</li>
+</ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><tt class="docutils literal"><span class="pre">registration/password_reset_form.html</span></tt></dt>
-<dd><p class="first last">Used in the view <a class="reference internal" href="../api/password_policies.views.html#std:view-PasswordResetFormView"><tt class="xref std std-view docutils literal"><span class="pre">PasswordResetFormView</span></tt></a>.</p>
+<dd><p class="first">Used in the view <a class="reference internal" href="../api/password_policies.views.html#std:view-PasswordResetFormView"><tt class="xref std std-view docutils literal"><span class="pre">PasswordResetFormView</span></tt></a>.</p>
+<p>Displays the form to start a password reset. Has the following context
+variables:</p>
+<ul class="last">
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">form</span></tt></dt>
+<dd><p class="first last">The form used to identify the user  by his/her email address.</p>
+</dd>
+</dl>
+</li>
+</ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><tt class="docutils literal"><span class="pre">registration/password_reset_subject.txt</span></tt></dt>
-<dd><p class="first last">Used in the form <a class="reference internal" href="../api/password_policies.forms.html#std:form-PasswordResetForm"><tt class="xref std std-form docutils literal"><span class="pre">PasswordResetForm</span></tt></a> to send the password reset email.
-This template is used to generate the subject of the email.</p>
+<dd><p class="first">Used in the form <a class="reference internal" href="../api/password_policies.forms.html#std:form-PasswordResetForm"><tt class="xref std std-form docutils literal"><span class="pre">PasswordResetForm</span></tt></a> to send the password reset email.</p>
+<p>This template is used to generate the subject of the email. Has the
+following context variables:</p>
+<ul class="last">
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">domain</span></tt></dt>
+<dd><p class="first last">The domain name.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">site_name</span></tt></dt>
+<dd><p class="first last">The name of the site.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">protocol</span></tt></dt>
+<dd><p class="first last">The HTTP protocol. Either <tt class="docutils literal"><span class="pre">http</span></tt> or <tt class="docutils literal"><span class="pre">https</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">email</span></tt></dt>
+<dd><p class="first last">The user&#8217;s email address.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">signature</span></tt></dt>
+<dd><p class="first last">The signature token to use in a one-time secret URL.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">timestamp</span></tt></dt>
+<dd><p class="first last">The timestamp token to use in a one-time secret URL.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">uid</span></tt></dt>
+<dd><p class="first last">A base36-encoded string representig the user id.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">user</span></tt></dt>
+<dd><p class="first last">The user instance.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">request</span></tt></dt>
+<dd><p class="first last">The instance of the <tt class="docutils literal"><span class="pre">request</span></tt>.</p>
+</dd>
+</dl>
+</li>
+</ul>
 </dd>
 </dl>
 </li>
@@ -258,7 +462,7 @@ the following inside a project&#8217;s root directory:</p>
       <li>Prev: <a href="install.html">Installation</a></li>
     
     
-      <li>Next: <a href="using.html">Using the application</a></li>
+      <li>Next: <a href="security.html">Security</a></li>
     
   </ul>
   <h3>You are here:</h3>
@@ -302,7 +506,7 @@ the following inside a project&#8217;s root directory:</p>
      |
     <a title="django-password-policies 0.1.0.dev documentation" href="../index.html" accesskey="U">up</a>
    |
-    <a href="using.html" title="Using the application">next</a> &raquo;</div>
+    <a href="security.html" title="Security">next</a> &raquo;</div>
     </div>
   </div>
 

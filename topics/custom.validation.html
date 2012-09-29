@@ -1,0 +1,231 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Customizing validation &mdash; django-password-policies 0.1.0.dev documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.0.dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="django-password-policies 0.1.0.dev documentation" href="../index.html" />
+    <link rel="next" title="Using the password history" href="password.history.html" />
+    <link rel="prev" title="Security" href="security.html" />
+ 
+<script type="text/javascript" src="../templatebuiltins.js"></script>
+<script type="text/javascript">
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);
+</script>
+
+  </head>
+  <body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">django-password-policies 0.1.0.dev documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="security.html" title="Security">previous</a> 
+     |
+    <a title="django-password-policies 0.1.0.dev documentation" href="../index.html" accesskey="U">up</a>
+   |
+    <a href="password.history.html" title="Using the password history">next</a> &raquo;</div>
+    </div>
+    
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="topics-custom.validation">
+            
+  <div class="section" id="customizing-validation">
+<span id="custom-validation"></span><h1>Customizing validation<a class="headerlink" href="#customizing-validation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="using-the-built-in-validators">
+<span id="built-in-validators"></span><h2>Using the built-in validators<a class="headerlink" href="#using-the-built-in-validators" title="Permalink to this headline">¶</a></h2>
+<p>The built-in validators can be customized by changing values in a project&#8217;s
+settings file.</p>
+<p>A list of built-in validators is available at:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/password_policies.forms.validators.html#api-validators"><em>Validators</em></a></li>
+</ul>
+<p>A list of default application settings is available at:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../api/password_policies.conf.html#api-settings"><em>Settings</em></a></li>
+</ul>
+</div>
+<div class="section" id="customizing-by-sub-classing-forms">
+<span id="custom-use"></span><h2>Customizing by sub-classing forms<a class="headerlink" href="#customizing-by-sub-classing-forms" title="Permalink to this headline">¶</a></h2>
+<p>Customizing password validation can be used by simply using a
+<a class="reference internal" href="../api/password_policies.forms.fields.html#std:formfield-PasswordPoliciesField"><tt class="xref std std-formfield docutils literal"><span class="pre">PasswordPoliciesField</span></tt></a> and <a class="reference internal" href="../api/password_policies.forms.html#std:form-PasswordPoliciesForm"><tt class="xref std std-form docutils literal"><span class="pre">PasswordPoliciesForm</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">password_policies.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">password_policies.forms</span> <span class="kn">import</span> <span class="n">PasswordPoliciesForm</span>
+<span class="kn">from</span> <span class="nn">password_policies.forms.fields</span> <span class="kn">import</span> <span class="n">PasswordPoliciesField</span>
+
+<span class="kn">from</span> <span class="nn">your_app</span> <span class="kn">import</span> <span class="n">your_custom_validators</span>
+
+
+<span class="k">class</span> <span class="nc">CustomPasswordPoliciesForm</span><span class="p">(</span><span class="n">PasswordPoliciesForm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A form that lets a user set his/her password without entering the</span>
+<span class="sd">old password.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+    <span class="n">new_password1</span> <span class="o">=</span> <span class="n">PasswordPoliciesField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;New password&quot;</span><span class="p">),</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">PASSWORD_MAX_LENGTH</span><span class="p">,</span>
+        <span class="n">min_length</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">PASSWORD_MIN_LENGTH</span><span class="p">,</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">your_custom_validators</span><span class="o">.</span><span class="n">some_validator</span><span class="p">,</span>
+                    <span class="n">your_custom_validators</span><span class="o">.</span><span class="n">another_validator</span><span class="p">],)</span>
+
+    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cleaned_data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">CustomPasswordPoliciesForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+        <span class="n">new_password1</span> <span class="o">=</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;new_password1&quot;</span><span class="p">)</span>
+        <span class="n">new_password2</span> <span class="o">=</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;new_password2&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">new_password1</span> <span class="ow">and</span> <span class="n">new_password2</span><span class="p">:</span>
+            <span class="c"># Perform additional validation...</span>
+            <span class="k">pass</span>
+
+        <span class="c"># Always return the full collection of cleaned data.</span>
+        <span class="k">return</span> <span class="n">cleaned_data</span>
+</pre></div>
+</div>
+<p>To use the form with the built-in <a class="reference internal" href="../api/password_policies.views.html#std:view-PasswordResetConfirmView"><tt class="xref std std-view docutils literal"><span class="pre">PasswordResetConfirmView</span></tt></a> an
+URL pattern needs to be added to a project&#8217;s <tt class="docutils literal"><span class="pre">URLconf</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">password_policies.views</span> <span class="kn">import</span> <span class="n">PasswordResetConfirmView</span>
+
+<span class="kn">from</span> <span class="nn">your_app.forms</span> <span class="kn">import</span> <span class="n">CustomPasswordPoliciesForm</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s">r&#39;^password/reset/&#39;</span><span class="p">,</span> <span class="n">PasswordResetConfirmView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(</span><span class="n">form_class</span><span class="o">=</span><span class="n">CustomPasswordPoliciesForm</span><span class="p">)),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>         
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Customizing validation</a><ul>
+<li><a class="reference internal" href="#using-the-built-in-validators">Using the built-in validators</a></li>
+<li><a class="reference internal" href="#customizing-by-sub-classing-forms">Customizing by sub-classing forms</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>Browse</h3>
+  <ul>
+    
+      <li>Prev: <a href="security.html">Security</a></li>
+    
+    
+      <li>Next: <a href="password.history.html">Using the password history</a></li>
+    
+  </ul>
+  <h3>You are here:</h3>
+  <ul>
+      <li>
+        <a href="../index.html">django-password-policies 0.1.0.dev documentation</a>
+        
+        <ul><li>Customizing validation</li></ul>
+        
+      </li>
+  </ul>  
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/topics/custom.validation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+          </div> 
+        
+      
+    </div>
+    
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="security.html" title="Security">previous</a> 
+     |
+    <a title="django-password-policies 0.1.0.dev documentation" href="../index.html" accesskey="U">up</a>
+   |
+    <a href="password.history.html" title="Using the password history">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

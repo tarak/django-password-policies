@@ -92,7 +92,7 @@
 <span id="id1"></span><h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="features">
 <span id="id2"></span><h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
-<p><tt class="docutils literal"><span class="pre">django-password-policies</span></tt> is an application for the Django Framework that</p>
+<p><tt class="docutils literal"><span class="pre">django-password-policies</span></tt> is an application for the <a class="reference external" href="https://www.djangoproject.com/">Django</a> framework that</p>
 <ul class="simple">
 <li>provides a form field and forms that handle the validation of
 unicode passwords using different validators, see <a class="reference internal" href="../api/password_policies.forms.validators.html#api-validators"><em>Validators</em></a>.</li>
@@ -115,57 +115,11 @@ including checks for<ul>
 </li>
 <li>verifies that a new password is not too similar to an old one when a user
 changes his/her password.</li>
-<li>verifies that a new password does not match any username.</li>
 <li>verifies that a new password is not equal to an email address.</li>
 <li>implements a password history for users making it possible to check if users
 try to use passwords again.</li>
-</ul>
-<p>The use of a security related application like this one implies consequences.
-The following notes should be read carefully to understand how this application
-works:</p>
-<ul>
-<li><p class="first">When a user changes his/her password, and only then, the old password is
-compared to the new using the Levenshtein algorithm. This of course doesn&#8217;t
-work doing a password reset, obviously because the user has forgotten the old
-password.</p>
-</li>
-<li><p class="first">This application only counts letters, numbers and symbols in passwords. It
-does not try to differentiate between upper- or lowercase letter, simply
-because there are languages without uppercase letters. Forcing users speaking
-only these languages to use characters of &#8220;foreign&#8221; scripts is not really
-user friendly. The usage of unicode characters and especially numbers and
-symbols makes it hard enough to crack such a password.</p>
-</li>
-<li><p class="first">The minimum length of a password is the required number of letters, numbers
-and symbols. The <a class="reference internal" href="../api/password_policies.forms.fields.html#password_policies.forms.fields.PasswordPoliciesField" title="password_policies.forms.fields.PasswordPoliciesField"><tt class="xref py py-class docutils literal"><span class="pre">PasswordPoliciesField</span></tt></a> uses
-the <tt class="xref py py-attr docutils literal"><span class="pre">min_length</span></tt> attribute, but the usage only makes sense if you want
-to, in example, enforce 3 letters, 1 number and 1 symbol in a password with
-a minimum length of 8 characters, which is the default, by the way...</p>
-</li>
-<li><p class="first">The maximum length for a password is not limited by default, but can easyily
-be set using <a class="reference internal" href="using.html#settings"><em>Available settings</em></a>.</p>
-</li>
-<li><p class="first">Using the dictionary validator is basically opening a text file with a single
-word per line, reading ALL lines into memory and perform validation.</p>
-<p>The same applies to the list of words specific to each project, which could
-also be a queryset (not tested yet!).</p>
-<p>This slows down the validator depending of the sizes of lines or list entries.</p>
-<p>Also note that the validator opens the text file each time it is called.</p>
-<p>Therefor the validator is disabled by default, but can easily be enabled in
-each projects <a class="reference internal" href="../api/password_policies.conf.html#api-settings"><em>Settings</em></a>.</p>
-</li>
-<li><p class="first">The validator using the <a class="reference external" href="http://www.nongnu.org/python-crack/">Python bindings for cracklib</a> does not handle
-unicode characters and is disabled by default. Considering the advantage of
-such a validator, it was included in this application anyway. Like the
-dictionary validator it is disabled by default, but can easily be enabled in
-each projects <a class="reference internal" href="../api/password_policies.conf.html#api-settings"><em>Settings</em></a>.</p>
-</li>
-<li><p class="first">The password history, if enabled, stores the user&#8217;s password by generating a
-newly encrypted version of the new password, each time a user changes his/her
-password, using the included <tt class="docutils literal"><span class="pre">django-password-policies</span></tt> forms. Django
-includes a mechanism to compare a raw password with different encrypted
-passwords. No unencrypted password is saved to the database!</p>
-</li>
+<li>uses <a class="reference external" href="https://www.djangoproject.com/">Django</a>&#8216;s cryptographic signing API to generate one-time secret URLs
+for password resets.</li>
 </ul>
 </div>
 </div>

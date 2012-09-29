@@ -1,7 +1,8 @@
 .. _api-fields:
 
-Fields
-======
+===========
+Form fields
+===========
 
 django-password-policies provides a form field to validate new passwords:
 

@@ -19,7 +19,10 @@ Table of contents
     topics/overview
     topics/install
     topics/setup
-    topics/using
+    topics/security
+    topics/custom.validation
+    topics/password.history
+    topics/force.password.change
     topics/support
     api/index
     topics/testing

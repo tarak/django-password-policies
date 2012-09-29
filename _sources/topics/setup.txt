@@ -4,7 +4,6 @@
 Setting up the application
 ==========================
 
-
 .. _setup-templates:
 
 Required templates
@@ -22,41 +21,132 @@ except the templates to send the password reset email.
 
 * ``registration/password_change_done.html``
     Used in the view :view:`PasswordChangeDoneView`.
+    
+    Displays a message that a password change has been completed
+    successfully. Has no context variables.
 * ``registration/password_change_form.html``
     Used in the view :view:`PasswordChangeFormView`.
     
-    Has the following context variables:
+    Displays the form to change a password. Has the following context variables:
     
-    * ``form``
+    + ``form``
         The form used to change the user's password.
-    * ``next``
+    + ``next``
         If a password change is forced the view will remember the URL the user
         wanted to visit before being redirect to this view.
         By default, the path that the user should be redirected to upon
         successful password change is stored in a query string parameter called
         "next".
         
-        Note that if you provide a value to redirect_field_name, you will most
+        Note that if you provide a value to ``redirect_field_name``, you will most
         likely need to customize your login template as well, since the template
         context variable which stores the redirect path will use the value of
-        redirect_field_name as its key rather than "next" (the default).
+        ``redirect_field_name`` as its key rather than "next" (the default).
+
 * ``registration/password_reset_complete.html``
     Used in the view :view:`PasswordResetCompleteView`.
+    
+    Displays a message that a password reset has been completed
+    successfully. Has the following context variables:
+    
+    + ``login_url``
+        The URL of the login page.
+
 * ``registration/password_reset_confirm.html``
     Used in the view :view:`PasswordResetConfirmView`.
+    
+    Displays the form to reset a password. Has the following context variables:
+    
+    + ``form``
+        The form used to reset the user's password.
+
 * ``registration/password_reset_done.html``
     Used in the view :view:`PasswordResetDoneView`.
+    
+    Displays a message that a password reset has been started and that an email
+    with instructions has been sent to the user. Has no context variables.
 * ``registration/password_reset_email.html``
     Used in the form :form:`PasswordResetForm` to send the password reset email.
-    This template is used to generate an HTML-attachment for the email.
+    
+    This template is used to generate an HTML-attachment for the email. Has the
+    following context variables:
+    
+    + ``domain``
+        The domain name.
+    + ``site_name``
+        The name of the site.
+    + ``protocol``
+        The HTTP protocol. Either ``http`` or ``https``.
+    + ``email``
+        The user's email address.
+    + ``signature``
+        The signature token to use in a one-time secret URL.
+    + ``timestamp``
+        The timestamp token to use in a one-time secret URL.
+    + ``uid``
+        A base36-encoded string representig the user id.
+    + ``user``
+        The user instance.
+    + ``request``
+        The instance of the ``request``.
+
 * ``registration/password_reset_email.txt``
     Used in the form :form:`PasswordResetForm` to send the password reset email.
-    This template is used to generate the message body of the email.
+    
+    This template is used to generate the message body of the email. Has the
+    following context variables:
+    
+    + ``domain``
+        The domain name.
+    + ``site_name``
+        The name of the site.
+    + ``protocol``
+        The HTTP protocol. Either ``http`` or ``https``.
+    + ``email``
+        The user's email address.
+    + ``signature``
+        The signature token to use in a one-time secret URL.
+    + ``timestamp``
+        The timestamp token to use in a one-time secret URL.
+    + ``uid``
+        A base36-encoded string representig the user id.
+    + ``user``
+        The user instance.
+    + ``request``
+        The instance of the ``request``.
+
 * ``registration/password_reset_form.html``
     Used in the view :view:`PasswordResetFormView`.
+    
+    Displays the form to start a password reset. Has the following context
+    variables:
+    
+    * ``form``
+        The form used to identify the user  by his/her email address.
 * ``registration/password_reset_subject.txt``
     Used in the form :form:`PasswordResetForm` to send the password reset email.
-    This template is used to generate the subject of the email.
+    
+    This template is used to generate the subject of the email. Has the
+    following context variables:
+    
+    + ``domain``
+        The domain name.
+    + ``site_name``
+        The name of the site.
+    + ``protocol``
+        The HTTP protocol. Either ``http`` or ``https``.
+    + ``email``
+        The user's email address.
+    + ``signature``
+        The signature token to use in a one-time secret URL.
+    + ``timestamp``
+        The timestamp token to use in a one-time secret URL.
+    + ``uid``
+        A base36-encoded string representig the user id.
+    + ``user``
+        The user instance.
+    + ``request``
+        The instance of the ``request``.
 
 .. note::
   Minimal example templates can be found inside the tests module of
