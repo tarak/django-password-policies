@@ -47,6 +47,35 @@ handles the validation of new passwords:
        Required. A :class:`~django.forms.CharField` with
        a :class:`~django.forms.PasswordInput` widget.
 
+.. form:: PasswordPoliciesRegistrationForm
+
+``PasswordPoliciesRegistrationForm``
+------------------------------------
+
+.. autoclass:: password_policies.forms.PasswordPoliciesRegistrationForm
+   :members:
+   :special-members:
+
+   .. attribute:: username
+   
+       The username that the user wants to register.
+       
+       Required. A :class:`~django.forms.CharField`.
+
+   .. attribute:: password1
+   
+       The new password.
+       
+       Required. A :class:`~password_policies.forms.fields.PasswordPoliciesField`.
+
+   .. attribute:: password2
+   
+       The new password,
+       to confirm that it was given in correctly.
+       
+       Required. A :class:`~django.forms.CharField` with
+       a :class:`~django.forms.PasswordInput` widget.
+
 .. form:: PasswordResetForm
 
 ``PasswordResetForm``

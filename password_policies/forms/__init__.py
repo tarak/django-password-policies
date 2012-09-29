@@ -235,3 +235,46 @@ Returns a dictionary with common context items.
             'protocol': use_https and 'https' or 'http',
         }
         return context
+
+
+class PasswordPoliciesRegistrationForm(forms.Form):
+    """
+A form to support user registration with password policies.
+"""
+    error_messages = {
+        'duplicate_username': _("A user with that username already exists."),
+        'password_mismatch': _("The two password fields didn't match."),
+    }
+    username = forms.RegexField(label=_("Username"), max_length=30,
+        regex=r'^[\w.@+-]+$',
+        help_text=_("Required. 30 characters or fewer. Letters, digits and "
+                      "@/./+/-/_ only."),
+        error_messages={
+            'invalid': _("This value may contain only letters, numbers and "
+                         "@/./+/-/_ characters.")})
+    password1 = PasswordPoliciesField(label=_("Password"),
+        max_length=settings.PASSWORD_MAX_LENGTH,
+        min_length=settings.PASSWORD_MIN_LENGTH)
+    password2 = forms.CharField(label=_("Password confirmation"),
+        widget=forms.PasswordInput,
+        help_text=_("Enter the same password as above, for verification."))
+
+    def clean_username(self):
+        """
+Validates that the username is not already taken.
+"""
+        username = self.cleaned_data["username"]
+        if username and not User.objects.filter(username__iexact=username).count():
+            return username
+        raise forms.ValidationError(self.error_messages['duplicate_username'])
+
+    def clean_password2(self):
+        """
+Validates that the two passwords are identical.
+"""
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError(
+                self.error_messages['password_mismatch'])
+        return password2
