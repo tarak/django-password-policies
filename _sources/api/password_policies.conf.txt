@@ -17,3 +17,4 @@ and its new value to the project's settings file:
 
 .. autoclass:: password_policies.conf.Settings
    :members:
+   :show-inheritance:

@@ -15,3 +15,4 @@ that has the following helper functions:
 
 .. autoclass:: password_policies.managers.PasswordHistoryManager
    :members:
+   :member-order: bysource
