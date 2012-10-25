@@ -76,60 +76,62 @@ def process_docstring(app, what, name, obj, options, lines):
                             v.append(n)
                         attr = v
                     lines.append(u'    :param %s: %s' % (key, attr))
-        lines.append(u'.. class:: Meta')
+        lines.append(u'')
+        lines.append(u'.. attribute:: Meta')
         lines.append(u'')
         for key in sorted(model_meta_fields.iterkeys()):
             if hasattr(obj._meta, key) and getattr(obj._meta, key) != model_meta_fields[key]:
                 lines.append(u'    %s = %s' % (key, getattr(obj._meta, key)))
-                lines.append(u'    ')
+                lines.append(u'')
 
 
     # Only look at objects that inherit from Django's base model class
-    if inspect.isclass(obj) and issubclass(obj, forms.Form):
-        # Grab the field list from the meta class
-        fields = obj.base_fields
-        lines.append(u'')
+    if inspect.isclass(obj):
+        if issubclass(obj, forms.Form) or issubclass(obj, forms.ModelForm):
+            # Grab the field list from the meta class
+            fields = obj.base_fields
+            lines.append(u'')
 
-        for field in fields:
-            f = obj.base_fields[field]
-            # Decode and strip any html out of the field's help text
-            if hasattr(f, 'help_text'):
-                help_text = strip_tags(force_unicode(f.help_text))
-            # Decode and capitalize the verbose name, for use if there isn't
-            # any help text
-            label = force_unicode(f.label).capitalize()
+            for field in fields:
+                f = obj.base_fields[field]
+                # Decode and strip any html out of the field's help text
+                if hasattr(f, 'help_text'):
+                    help_text = strip_tags(force_unicode(f.help_text))
+                # Decode and capitalize the verbose name, for use if there isn't
+                # any help text
+                label = force_unicode(f.label).capitalize()
 
-            lines.append(u'.. attribute::  %s' % field)
-            lines.append(u'')
-            # Add the field's type to the docstring
-            field_inst = obj.base_fields[field]
-            l = u'   :class:`~%s.%s`' % (type(field_inst).__module__,
-                                         type(field_inst).__name__)
-            if field_inst.required:
-                l = l + ' (Required)'
-            lines.append(l)
-            lines.append(u'')
-            if hasattr(f, 'error_messages') and f.error_messages:
-                msgs = {}
-                for key, value in f.error_messages.items():
-                    msgs[key] = force_unicode(value)
-                lines.append(u':kwarg error_messages:  %s' % msgs)
-            if f.help_text:
-                # Add the model field to the end of the docstring as a param
-                # using the help text as the description
-                lines.append(u':kwarg help_text: %s' % help_text)
-            if hasattr(f, 'initial') and f.initial:
-                lines.append(u':kwarg initial: %s' % f.initial)
-            if hasattr(f, 'localize'):
-                lines.append(u':kwarg localize: %s' % f.localize)
-            if hasattr(f, 'validators') and f.validators:
-                l = []
-                for v in f.validators:
-                    l.append(':class:`~%s.%s`' % (type(v).__module__,
-                                                  type(v).__name__))
-                lines.append(u':kwarg validators: %s' % l)
-            lines.append(u':kwarg widget: %s' % type(f.widget).__name__)
-            lines.append(u'')
+                lines.append(u'.. attribute::  %s' % field)
+                lines.append(u'')
+                # Add the field's type to the docstring
+                field_inst = obj.base_fields[field]
+                l = u'   :class:`~%s.%s`' % (type(field_inst).__module__,
+                                             type(field_inst).__name__)
+                if field_inst.required:
+                    l = l + ' (Required)'
+                lines.append(l)
+                lines.append(u'')
+                if hasattr(f, 'error_messages') and f.error_messages:
+                    msgs = {}
+                    for key, value in f.error_messages.items():
+                        msgs[key] = force_unicode(value)
+                    lines.append(u':kwarg error_messages:  %s' % msgs)
+                if f.help_text:
+                    # Add the model field to the end of the docstring as a param
+                    # using the help text as the description
+                    lines.append(u':kwarg help_text: %s' % help_text)
+                if hasattr(f, 'initial') and f.initial:
+                    lines.append(u':kwarg initial: %s' % f.initial)
+                if hasattr(f, 'localize'):
+                    lines.append(u':kwarg localize: %s' % f.localize)
+                if hasattr(f, 'validators') and f.validators:
+                    l = []
+                    for v in f.validators:
+                        l.append(':class:`~%s.%s`' % (type(v).__module__,
+                                                      type(v).__name__))
+                    lines.append(u':kwarg validators: %s' % l)
+                lines.append(u':kwarg widget: %s' % type(f.widget).__name__)
+                lines.append(u'')
 
     # Return the extended docstring
     return lines
