@@ -9,7 +9,7 @@ from django.core import signing
 from django.template import loader
 from django.utils.datastructures import SortedDict
 from django.utils.http import int_to_base36
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 
 
 from password_policies.conf import settings
@@ -21,7 +21,10 @@ class PasswordPoliciesForm(forms.Form):
     """
 A form that lets a user set his/her password without entering the
 old password.
+
+Has the following fields and methods:
 """
+    #: This forms error messages.
     error_messages = {
         'password_mismatch': _("The two password fields didn't match."),
         'password_used': _("The new password was used before. "
@@ -91,7 +94,10 @@ class PasswordPoliciesChangeForm(PasswordPoliciesForm):
     """
 A form that lets a user change his/her password by entering
 their old password.
+
+Has the following fields and methods:
 """
+    #: This forms error messages.
     error_messages = dict(PasswordPoliciesForm.error_messages, **{
         'password_incorrect': _("Your old password was entered incorrectly. "
                                 "Please enter it again."),
@@ -146,13 +152,19 @@ PasswordPoliciesChangeForm.base_fields = SortedDict([
 
 
 class PasswordResetForm(forms.Form):
+    """
+A form to let a user reset his/her password.
+
+Has the following fields and methods:
+"""
+    #: This forms error messages.
     error_messages = {
         'unknown': _("That e-mail address doesn't have an associated "
                      "user account. Are you sure you've registered?"),
         'unusable': _("The user account associated with this e-mail "
                       "address cannot reset the password."),
     }
-    email = forms.EmailField(label=_("E-mail"), max_length=75)
+    email = forms.EmailField(label=_("E-mail"), max_length=75,help_text='help')
 
     def clean_email(self):
         """
@@ -240,7 +252,10 @@ Returns a dictionary with common context items.
 class PasswordPoliciesRegistrationForm(forms.Form):
     """
 A form to support user registration with password policies.
+
+Has the following fields and methods:
 """
+    #: This forms error messages.
     error_messages = {
         'duplicate_username': _("A user with that username already exists."),
         'password_mismatch': _("The two password fields didn't match."),

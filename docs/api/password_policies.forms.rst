@@ -16,20 +16,7 @@ handles the validation of new passwords:
 .. autoclass:: password_policies.forms.PasswordPoliciesForm
    :members:
    :special-members:
-
-   .. attribute:: new_password1
-   
-       The new password.
-       
-       Required. A :class:`~password_policies.forms.fields.PasswordPoliciesField`.
-
-   .. attribute:: new_password2
-   
-       The new password,
-       to confirm that it was given in correctly.
-       
-       Required. A :class:`~django.forms.CharField` with
-       a :class:`~django.forms.PasswordInput` widget.
+   :member-order: bysource
 
 .. form:: PasswordPoliciesChangeForm
 
@@ -39,13 +26,7 @@ handles the validation of new passwords:
 .. autoclass:: password_policies.forms.PasswordPoliciesChangeForm
    :members:
    :show-inheritance:
-
-   .. attribute:: old_password
-   
-       The actual password.
-       
-       Required. A :class:`~django.forms.CharField` with
-       a :class:`~django.forms.PasswordInput` widget.
+   :member-order: bysource
 
 .. form:: PasswordPoliciesRegistrationForm
 
@@ -55,26 +36,7 @@ handles the validation of new passwords:
 .. autoclass:: password_policies.forms.PasswordPoliciesRegistrationForm
    :members:
    :special-members:
-
-   .. attribute:: username
-   
-       The username that the user wants to register.
-       
-       Required. A :class:`~django.forms.CharField`.
-
-   .. attribute:: password1
-   
-       The new password.
-       
-       Required. A :class:`~password_policies.forms.fields.PasswordPoliciesField`.
-
-   .. attribute:: password2
-   
-       The new password,
-       to confirm that it was given in correctly.
-       
-       Required. A :class:`~django.forms.CharField` with
-       a :class:`~django.forms.PasswordInput` widget.
+   :member-order: bysource
 
 .. form:: PasswordResetForm
 
@@ -83,9 +45,4 @@ handles the validation of new passwords:
 
 .. autoclass:: password_policies.forms.PasswordResetForm
    :members:
-
-   .. attribute:: email
-   
-       The actual email address of a user.
-       
-       Required. A :class:`~django.forms.EmailField`.
+   :member-order: bysource

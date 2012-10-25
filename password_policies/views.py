@@ -127,9 +127,8 @@ confirmed.
 Adds the login URL to redirect to (defaults to the LOGIN_URL setting
 in Django) to the view's context.
 """
-        context = super(PasswordResetCompleteView, self).get_context_data(**kwargs)
-        context['login_url'] = resolve_url(settings.LOGIN_URL)
-        return context
+        kwargs['login_url'] = resolve_url(settings.LOGIN_URL)
+        return super(PasswordResetCompleteView, self).get_context_data(**kwargs)
 
 
 class PasswordResetConfirmView(LoggedOutMixin, FormView):
