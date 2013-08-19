@@ -55,7 +55,7 @@ Download
 
 The latest release package can be downloaded from `the GitHub download page`_.
 
-.. _`the GitHub download page`: https://github.com/tarak/django-password-policies/downloads
+.. _`the GitHub download page`: https://github.com/tarak/django-password-policies/releases
 
 .. _install-install:
 

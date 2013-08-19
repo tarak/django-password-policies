@@ -56,7 +56,7 @@ Used by the :validator:`DictionaryValidator`.
     #:
     #: Defaults to 10 entries.
     PASSWORD_HISTORY_COUNT = 10
-    #: Specifies how close a fuzzy match has to be to be,
+    #: Specifies how close a fuzzy match has to be,
     #: considered a match.
     #:
     #: Used by the :validator:`CommonSequenceValidator`.
