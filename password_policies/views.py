@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
@@ -93,7 +95,7 @@ if set, otherwise the URL to the :class:`PasswordChangeDoneView`.
         checked = '_password_policies_last_checked'
         last = '_password_policies_last_changed'
         required = '_password_policies_change_required'
-        now = datetime.now()
+        now = timezone.now()
         self.request.session[checked] = now
         self.request.session[last] = now
         self.request.session[required] = False
