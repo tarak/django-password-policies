@@ -23,5 +23,8 @@ and a mechanism to force password changes.
         'Programming Language :: Python',
         'Framework :: Django',
     ],
+    install_requires=['django<=1.6',
+                      'django-easysettings',
+    ],
     test_suite='tests.main',
 )
