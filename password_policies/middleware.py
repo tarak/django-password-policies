@@ -1,6 +1,7 @@
 from datetime import datetime
 from datetime import timedelta
 
+from django.utils import timezone
 from django.core.urlresolvers import resolve, reverse, NoReverseMatch, Resolver404
 from django.http import HttpResponseRedirect
 
@@ -124,7 +125,7 @@ To use this middleware you need to add it to the
             resolve(request.path)
         except Resolver404:
             return
-        self.now = datetime.now()
+        self.now = timezone.now()
         self.url = reverse('password_change')
         if settings.PASSWORD_DURATION_SECONDS and \
                 request.user.is_authenticated() and \

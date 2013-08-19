@@ -2,6 +2,7 @@ from datetime import datetime
 from datetime import timedelta
 
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth.hashers import identify_hasher
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -42,7 +43,7 @@ Checks if the user needs to change his/her password.
         else:
             last_change_date = user.date_joined
         d = timedelta(seconds=settings.PASSWORD_DURATION_SECONDS)
-        expired_date = datetime.now() - d
+        expired_date = timezone.now() - d
         if last_change_date < expired_date:
             return True
         return False
