@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, url
 
 from password_policies.views import PasswordChangeFormView
 from password_policies.views import PasswordChangeDoneView

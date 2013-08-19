@@ -2,11 +2,11 @@ from __future__ import division
 import itertools
 import math
 import unicodedata
+import re
 import stringprep
 
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.core.validators import email_re
 from django.utils.encoding import smart_unicode
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
@@ -428,14 +428,38 @@ Validates that a given password is not similar to an email address.
     code = u"invalid_email_used"
     #: The validator's error message.
     message = _("The new password is similar to an email address.")
-    regex = email_re
+    user_regex = re.compile(
+        r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*$"  # dot-atom
+        r'|^"([\001-\010\013\014\016-\037!#-\[\]-\177]|\\[\001-\011\013\014\016-\177])*"$)', # quoted-string
+        re.IGNORECASE)
+    domain_regex = re.compile(
+        r'(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?$)'  # domain
+        # literal form, ipv4 address (SMTP 4.1.3)
+        r'|^\[(25[0-5]|2[0-4]\d|[0-1]?\d?\d)(\.(25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}\]$',
+        re.IGNORECASE)
 
     def __call__(self, value):
         """
 Validates that the input does not match the regular expression.
 """
-        if self.regex.search(force_text(value)):
-            raise ValidationError(self.message, code=self.code)
+        user_part_found = False
+        domain_part_found = False
+        if value and '@' in value:
+            user_part, domain_part = value.rsplit('@', 1)
+            if self.user_regex.match(user_part):
+                user_part_found = True
+            if not self.domain_regex.match(domain_part):
+                # Try for possible IDN domain-part
+                try:
+                    domain_part = domain_part.encode('idna').decode('ascii')
+                    if self.domain_regex.match(domain_part):
+                        domain_part_found = True
+                except UnicodeError:
+                    pass
+            else:
+                domain_part_found = True
+            if user_part_found and domain_part_found:
+                raise ValidationError(self.message, code=self.code)
 
 
 class NumberCountValidator(BaseCountValidator):
