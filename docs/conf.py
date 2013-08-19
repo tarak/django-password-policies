@@ -20,9 +20,7 @@ import sys, os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "_ext")))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "password_policies.tests.settings")
 from password_policies.tests import settings
-from django.core.management import setup_environ
 
-#setup_environ(settings)
 password_policies = __import__('password_policies')
 
 # -- General configuration -----------------------------------------------------

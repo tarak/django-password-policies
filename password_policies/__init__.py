@@ -1,4 +1,4 @@
-VERSION = (0, 1, 0, 'beta', 0)
+VERSION = (0, 1, 1, 'alpha', 0)
 
 
 def get_version(version=None):
@@ -19,10 +19,10 @@ def get_version(version=None):
     sub = ''
     if version[3] == 'alpha' and version[4] == 0:
         # At the toplevel, this would cause an import loop.
-        from django.utils.version import get_svn_revision
-        svn_revision = get_svn_revision()[4:]
-        if svn_revision != 'unknown':
-            sub = '.dev%s' % svn_revision
+        from django.utils.version import get_git_changeset
+        git_changeset = get_git_changeset()
+        if git_changeset != 'unknown':
+            sub = '.dev%s' % git_changeset
 
     elif version[3] != 'final':
         mapping = {'alpha': 'a', 'beta': 'b', 'rc': 'c'}
