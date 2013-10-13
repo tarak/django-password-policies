@@ -48,19 +48,29 @@ Debian based distributions the according package is called:
 
 * python-levenshtein
 
-.. _install-download:
+.. _install-pypi:
 
-Download
-========
+From Pypi
+=========
+
+To install from `PyPi`_::
+
+    [sudo] pip install django-password-policies
+
+or::
+
+    [sudo] easy_install django-password-policies
+
+.. _`PyPi`: https://pypi.python.org/pypi/django-password-policies
+
+.. _install-source:
+
+From source
+===========
 
 The latest release package can be downloaded from `the GitHub download page`_.
 
 .. _`the GitHub download page`: https://github.com/tarak/django-password-policies/releases
-
-.. _install-install:
-
-Installing
-==========
 
 Once you've downloaded the package, unpack it (on most operating systems, simply
 double-click; alternately, at a command line on Linux, Mac OS X or other

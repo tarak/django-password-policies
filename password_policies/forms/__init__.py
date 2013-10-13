@@ -15,6 +15,7 @@ from django.utils.translation import ugettext as _
 from password_policies.conf import settings
 from password_policies.forms.fields import PasswordPoliciesField
 from password_policies.models import PasswordHistory
+from password_policies.models import PasswordChangeRequired
 
 
 class PasswordPoliciesForm(forms.Form):
@@ -87,6 +88,8 @@ is set to ``True``.
             password = make_password(new_password)
             PasswordHistory.objects.create(password=password, user=self.user)
             PasswordHistory.objects.delete_expired(self.user)
+        if PasswordChangeRequired.objects.filter(user=self.user).count():
+            PasswordChangeRequired.objects.filter(user=self.user).delete()
         return self.user
 
 

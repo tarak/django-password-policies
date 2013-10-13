@@ -7,6 +7,14 @@ class Settings(AppSettings):
     """
 Default settings for django-password-policies.
 """
+    #: Determines which fields should be searched upon
+    #: in the admin change list of
+    #: the :class:`~password_policies.models.PasswordChangeRequired`
+    PASSWORD_CHANGE_REQUIRED_ADMIN_SEARCH_FIELDS = ['id', 'user__id',
+                                                    'user__first_name',
+                                                    'user__email',
+                                                    'user__last_name',
+                                                    'user__username',]
     #: Determines wether the :middleware:`PasswordChangeMiddleware`
     #: should ignore the logout views, allowing the user to log out
     #: even if a password change is required.
@@ -51,6 +59,14 @@ Used by the :validator:`DictionaryValidator`.
     #:
     #: Defaults to 60 days.
     PASSWORD_DURATION_SECONDS = 24 * 60**3
+    #: Determines which fields should be searched upon
+    #: in the admin change list of
+    #: the :class:`~password_policies.models.PasswordHistory`
+    PASSWORD_HISTORY_ADMIN_SEARCH_FIELDS = ['id', 'user__id',
+                                            'user__first_name',
+                                            'user__email',
+                                            'user__last_name',
+                                            'user__username',]
     #: Specifies the number of user's previous passwords to
     #: remember when the password history is being used.
     #:

@@ -1,8 +1,5 @@
-from datetime import datetime
-
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.core import signing
 from django.core.urlresolvers import reverse
@@ -18,8 +15,9 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 
 from password_policies.conf import settings
-from password_policies.forms import PasswordPoliciesForm, PasswordPoliciesChangeForm, PasswordResetForm
-from password_policies.models import PasswordHistory
+from password_policies.forms import PasswordPoliciesForm
+from password_policies.forms import PasswordPoliciesChangeForm
+from password_policies.forms import PasswordResetForm
 
 
 class LoggedOutMixin(View):
@@ -78,7 +76,7 @@ A view that allows logged in users to change their password.
         return super(PasswordChangeFormView, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form):
-        user = form.save()
+        form.save()
         return super(PasswordChangeFormView, self).form_valid(form)
 
     def get_form(self, form_class):
@@ -162,20 +160,24 @@ class PasswordResetConfirmView(LoggedOutMixin, FormView):
                 max_age = settings.PASSWORD_RESET_TIMEOUT_DAYS * 24 * 60 * 60
                 l = (self.user.password, self.timestamp, self.signature)
                 try:
-                    value = signer.unsign(':'.join(l), max_age=max_age)
+                    signer.unsign(':'.join(l), max_age=max_age)
                 except (signing.BadSignature, signing.SignatureExpired):
                     pass
                 else:
                     self.validlink = True
-        return super(PasswordResetConfirmView, self).dispatch(request, *args, **kwargs)
+        return super(PasswordResetConfirmView, self).dispatch(request,
+                                                              *args,
+                                                              **kwargs)
 
     def form_valid(self, form):
-        user = form.save()
+        form.save()
         return super(PasswordResetConfirmView, self).form_valid(form)
 
     def get(self, request, *args, **kwargs):
         if self.validlink:
-            return super(PasswordResetConfirmView, self).get(request, *args, **kwargs)
+            return super(PasswordResetConfirmView, self).get(request,
+                                                             *args,
+                                                             **kwargs)
         return self.render_to_response(self.get_context_data())
 
     def get_context_data(self, **kwargs):
@@ -199,7 +201,9 @@ if set, otherwise to the :class:`PasswordResetCompleteView`.
 
     def post(self, request, *args, **kwargs):
         if self.validlink:
-            return super(PasswordResetConfirmView, self).post(request, *args, **kwargs)
+            return super(PasswordResetConfirmView, self).post(request,
+                                                              *args,
+                                                              **kwargs)
         return self.render_to_response(self.get_context_data())
 
 
@@ -258,7 +262,9 @@ A view that allows registered users to change their password.
 
     @method_decorator(csrf_protect)
     def dispatch(self, request, *args, **kwargs):
-        return super(PasswordResetFormView, self).dispatch(request, *args, **kwargs)
+        return super(PasswordResetFormView, self).dispatch(request,
+                                                           *args,
+                                                           **kwargs)
 
     def get_success_url(self):
         """

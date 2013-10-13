@@ -1,4 +1,4 @@
-from datetime import datetime
+#from datetime import datetime
 from datetime import timedelta
 
 from django.utils import timezone
@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 
 from password_policies.conf import settings
 from password_policies.models import PasswordHistory
+from password_policies.models import PasswordChangeRequired
 
 import re
 
@@ -51,7 +52,7 @@ To use this middleware you need to add it to the
     last = '_password_policies_last_changed'
     required = '_password_policies_change_required'
 
-    def _check(self, request):
+    def _check_history(self, request):
         if not request.session.get(self.last, None):
             newest = PasswordHistory.objects.get_newest(request.user)
             if newest:
@@ -63,12 +64,19 @@ To use this middleware you need to add it to the
         request.session[self.expired] = expired_date
         if request.session[self.last] < request.session[self.expired]:
             request.session[self.required] = True
+            if not PasswordChangeRequired.objects.filter(user=request.user).count():
+                PasswordChangeRequired.objects.create(user=request.user)
         else:
             request.session[self.required] = False
 
     def _check_necessary(self, request):
         if not request.session.get(self.checked, None):
             request.session[self.checked] = self.now
+        # If a password change is enforced we won't check
+        # the user's password history, thus reducing DB hits...
+        if PasswordChangeRequired.objects.filter(user=request.user).count():
+            request.session[self.required] = True
+            return
         seconds = settings.PASSWORD_CHECK_SECONDS
         d = timedelta(seconds=seconds)
         if request.session[self.checked] < self.now - d:
@@ -79,6 +87,8 @@ To use this middleware you need to add it to the
                 del request.session[self.expired]
             except KeyError:
                 pass
+        if settings.PASSWORD_USE_HISTORY:
+            self._check_history(request)
 
     def _is_excluded_path(self, actual_path):
         paths = settings.PASSWORD_CHANGE_MIDDLEWARE_EXCLUDED_PATHS
@@ -131,5 +141,4 @@ To use this middleware you need to add it to the
                 request.user.is_authenticated() and \
                 not self._is_excluded_path(request.path):
             self._check_necessary(request)
-            self._check(request)
             return self._redirect(request)
