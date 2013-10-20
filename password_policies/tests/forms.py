@@ -1,14 +1,16 @@
-from django.contrib.auth.models import User
 from django.utils.encoding import force_unicode
 
-from password_policies.tests.lib import BaseTest
-from password_policies.forms import PasswordPoliciesForm, PasswordPoliciesChangeForm
+from password_policies.forms import PasswordPoliciesForm
+from password_policies.forms import PasswordPoliciesChangeForm
 from password_policies.forms.fields import PasswordPoliciesField
+
+from password_policies.tests.lib import BaseTest
+from password_policies.tests.lib import create_user
+from password_policies.tests.lib import create_password_history
+from password_policies.tests.lib import passwords
 
 
 class PasswordPoliciesFieldTest(BaseTest):
-
-    fixtures = ['django_password_policies_test_forms_fixtures.json']
 
     def test_password_field_1(self):
         self.assertFieldOutput(PasswordPoliciesField,
@@ -65,74 +67,73 @@ class PasswordPoliciesFieldTest(BaseTest):
 
 class PasswordPoliciesFormTest(BaseTest):
 
-    fixtures = ['django_password_policies_test_forms_fixtures.json']
+    def setUp(self):
+        self.user = create_user()
+        create_password_history(self.user)
+        return super(PasswordPoliciesFormTest, self).setUp()
 
     def test_reused_password(self):
-        user = User.objects.get(username='alice')
         data = {
-            'new_password1': 'K9hrfQH!zdj',
-            'new_password2': 'K9hrfQH!zdj',
+            'new_password1': 'ooDei1Hoo+Ru',
+            'new_password2': 'ooDei1Hoo+Ru',
             }
-        form = PasswordPoliciesForm(user, data)
+        form = PasswordPoliciesForm(self.user, data)
         self.assertFalse(form.is_valid())
         self.assertEqual(form["new_password1"].errors,
                          [force_unicode(form.error_messages['password_used'])])
 
     def test_password_mismatch(self):
-        user = User.objects.get(username='alice')
         data = {
             'new_password1': 'Chah+pher9k',
             'new_password2': 'Chah+pher8k',
             }
-        form = PasswordPoliciesForm(user, data)
+        form = PasswordPoliciesForm(self.user, data)
         self.assertFalse(form.is_valid())
         self.assertEqual(form["new_password2"].errors,
                          [force_unicode(form.error_messages['password_mismatch'])])
 
     def test_password_verification_unicode(self):
-        user = User.objects.get(username='alice')
         password = u'\xc1\u20ac\xc3\xc4\u0662\xc5\xc6\xc7'
         self.assertEqual(len(password), 8)
         data = {
             'new_password1': password,
             'new_password2': password,
             }
-        form = PasswordPoliciesForm(user, data)
+        form = PasswordPoliciesForm(self.user, data)
         self.assertTrue(form.is_valid())
 
     def test_success(self):
-        user = User.objects.get(username='alice')
         data = {
             'new_password1': 'Chah+pher9k',
             'new_password2': 'Chah+pher9k',
             }
-        form = PasswordPoliciesForm(user, data)
+        form = PasswordPoliciesForm(self.user, data)
         self.assertTrue(form.is_valid())
 
 
 class PasswordPoliciesChangeFormTest(BaseTest):
 
-    fixtures = ['django_password_policies_test_forms_fixtures.json']
+    def setUp(self):
+        self.user = create_user()
+        return super(PasswordPoliciesChangeFormTest, self).setUp()
 
     def test_password_invalid(self):
-        user = User.objects.get(username='alice')
         data = {
             'old_password': 'Oor0ohf4bi',
             'new_password1': 'Chah+pher9k',
             'new_password2': 'Chah+pher9k',
             }
-        form = PasswordPoliciesChangeForm(user, data)
+        form = PasswordPoliciesChangeForm(self.user, data)
         self.assertFalse(form.is_valid())
         self.assertEqual(form["old_password"].errors,
                          [force_unicode(form.error_messages['password_incorrect'])])
         self.assertFalse(form.is_valid())
 
     def test_success(self):
-        user = User.objects.get(username='alice')
         data = {
-            'old_password': 'Oor0ohf4bi-',
+            'old_password': passwords[-1],
             'new_password1': 'Chah+pher9k',
             'new_password2': 'Chah+pher9k',
             }
-        form = PasswordPoliciesChangeForm(user, data)
+        form = PasswordPoliciesChangeForm(self.user, data)
         self.assertTrue(form.is_valid())
