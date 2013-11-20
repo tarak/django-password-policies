@@ -39,12 +39,13 @@ Checks if the user needs to change his/her password.
 """
         newest = self.get_newest(user)
         if newest:
-            last_change_date = newest.created
+            last_change = newest.created
         else:
-            last_change_date = user.date_joined
+            # TODO: Do not rely on this property!
+            last_change = user.date_joined
         d = timedelta(seconds=settings.PASSWORD_DURATION_SECONDS)
-        expired_date = timezone.now() - d
-        if last_change_date < expired_date:
+        expiry = timezone.now() - d
+        if last_change < expiry:
             return True
         return False
 

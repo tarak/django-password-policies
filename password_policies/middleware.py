@@ -1,15 +1,13 @@
-#from datetime import datetime
+# from datetime import datetime
 from datetime import timedelta
-
-from django.utils import timezone
-from django.core.urlresolvers import resolve, reverse, NoReverseMatch, Resolver404
+from django.core.urlresolvers import resolve, reverse, NoReverseMatch, \
+    Resolver404
 from django.http import HttpResponseRedirect
-
+from django.utils import timezone
 from password_policies.conf import settings
-from password_policies.models import PasswordHistory
-from password_policies.models import PasswordChangeRequired
-
+from password_policies.models import PasswordChangeRequired, PasswordHistory
 import re
+
 
 class PasswordChangeMiddleware(object):
     """
