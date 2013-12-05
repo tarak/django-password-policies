@@ -1,12 +1,14 @@
 # from datetime import datetime
+import re
 from datetime import timedelta
 from django.core.urlresolvers import resolve, reverse, NoReverseMatch, \
     Resolver404
 from django.http import HttpResponseRedirect
 from django.utils import timezone
+
 from password_policies.conf import settings
 from password_policies.models import PasswordChangeRequired, PasswordHistory
-import re
+from password_policies.utils import PasswordCheck
 
 
 class PasswordChangeMiddleware(object):
@@ -49,6 +51,7 @@ To use this middleware you need to add it to the
     expired = '_password_policies_expired'
     last = '_password_policies_last_changed'
     required = '_password_policies_change_required'
+    td = timedelta(seconds=settings.PASSWORD_DURATION_SECONDS)
 
     def _check_history(self, request):
         if not request.session.get(self.last, None):
@@ -56,11 +59,10 @@ To use this middleware you need to add it to the
             if newest:
                 request.session[self.last] = newest.created
             else:
+                # TODO: This relies on request.user.date_joined which might not
+                # be available!!!
                 request.session[self.last] = request.user.date_joined
-        d = timedelta(seconds=settings.PASSWORD_DURATION_SECONDS)
-        expired_date = self.now - d
-        request.session[self.expired] = expired_date
-        if request.session[self.last] < request.session[self.expired]:
+        if request.session[self.last] < self.expiry_datetime:
             request.session[self.required] = True
             if not PasswordChangeRequired.objects.filter(user=request.user).count():
                 PasswordChangeRequired.objects.create(user=request.user)
@@ -75,9 +77,7 @@ To use this middleware you need to add it to the
         if PasswordChangeRequired.objects.filter(user=request.user).count():
             request.session[self.required] = True
             return
-        seconds = settings.PASSWORD_CHECK_SECONDS
-        d = timedelta(seconds=seconds)
-        if request.session[self.checked] < self.now - d:
+        if request.session[self.checked] < self.now - self.expiry_datetime:
             try:
                 del request.session[self.last]
                 del request.session[self.checked]
@@ -120,10 +120,10 @@ To use this middleware you need to add it to the
         if request.session[self.required]:
             redirect_to = request.GET.get(settings.REDIRECT_FIELD_NAME, '')
             if redirect_to:
-                next = redirect_to
+                next_to = redirect_to
             else:
-                next = request.get_full_path()
-            url = "%s?%s=%s" % (self.url, settings.REDIRECT_FIELD_NAME, next)
+                next_to = request.get_full_path()
+            url = "%s?%s=%s" % (self.url, settings.REDIRECT_FIELD_NAME, next_to)
             return HttpResponseRedirect(url)
 
     def process_request(self, request):
@@ -138,5 +138,7 @@ To use this middleware you need to add it to the
         if settings.PASSWORD_DURATION_SECONDS and \
                 request.user.is_authenticated() and \
                 not self._is_excluded_path(request.path):
+            self.check = PasswordCheck(request.user)
+            self.expiry_datetime = self.check.get_expiry_datetime()
             self._check_necessary(request)
             return self._redirect(request)

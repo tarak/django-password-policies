@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django import forms
 from django.contrib.auth.hashers import UNUSABLE_PASSWORD
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.forms import AdminPasswordChangeForm
 from django.contrib.auth.models import User
 from django.contrib.sites.models import get_current_site
 from django.core import signing
@@ -88,8 +89,6 @@ is set to ``True``.
             password = make_password(new_password)
             PasswordHistory.objects.create(password=password, user=self.user)
             PasswordHistory.objects.delete_expired(self.user)
-        if PasswordChangeRequired.objects.filter(user=self.user).count():
-            PasswordChangeRequired.objects.filter(user=self.user).delete()
         return self.user
 
 
@@ -146,6 +145,12 @@ Validates that old and new password are not too similar.
                             raise forms.ValidationError(
                                     self.error_messages['password_similar'])
         return cleaned_data
+
+    def save(self, commit=True):
+        user = super(PasswordPoliciesChangeForm, self).save(commit=commit)
+        if user.password_change_required.count():
+            user.password_change_required.all().delete()
+        return user
 
 PasswordPoliciesChangeForm.base_fields = SortedDict([
     (k, PasswordPoliciesChangeForm.base_fields[k])
@@ -213,10 +218,10 @@ user.
         for user in self.users_cache:
             c = context
             var = signer.sign(user.password)
-            clear, timestamp, signature = var.split(':')
+            var = var.split(':')
             c['email'] = user.email
-            c['signature'] = signature
-            c['timestamp'] = timestamp
+            c['signature'] = var[2]
+            c['timestamp'] = var[1]
             c['uid'] = int_to_base36(user.id)
             c['user'] = user
             subject = loader.render_to_string(subject_template_name, c)
