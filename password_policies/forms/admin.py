@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AdminPasswordChangeForm
+from django.utils.translation import ugettext as _
 
 from password_policies.conf import settings
 from password_policies.forms.fields import PasswordPoliciesField
