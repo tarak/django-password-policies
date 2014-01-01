@@ -1,7 +1,10 @@
 from __future__ import unicode_literals
 
 from django import forms
-from django.contrib.auth.hashers import UNUSABLE_PASSWORD
+try:
+    from django.contrib.auth.hashers import UNUSABLE_PASSWORD
+except ImportError:
+    from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.contrib.sites.models import get_current_site
