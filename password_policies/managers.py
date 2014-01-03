@@ -25,7 +25,7 @@ Deletes expired password history entries from the database(s).
             offset = self.default_offset
         qs = self.filter(user=user)
         if qs.count() > offset:
-            entry = qs[offset:offset+1].get()
+            entry = qs[offset:offset + 1].get()
             qs.filter(created__lte=entry.created).delete()
 
     def change_required(self, user):

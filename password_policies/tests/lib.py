@@ -56,14 +56,14 @@ def create_user(username="alice", raw_password=None, date_joined=None,
 This function dynamically creates an user with following properties:
 - The user is neither an admin nor a staff member.
 - The user is active.
-- The date and his/her last login is generated dynamically. 
+- The date and his/her last login is generated dynamically.
 """
     count = settings.PASSWORD_HISTORY_COUNT
     duration = settings.PASSWORD_DURATION_SECONDS
     if not raw_password:
         raw_password = passwords[-1]
     if not date_joined:
-        rind = randint(0, (duration/count+1))
+        rind = randint(0, (duration / count + 1))
         seconds = (count * duration + rind) * 2
         date_joined = get_datetime_from_delta(timezone.now(), seconds)
     if not last_login:
@@ -88,7 +88,7 @@ def create_password_history(user, password_list=[]):
         entry.created = created
         entry.save()
         created = get_datetime_from_delta(created, (duration * -1))
-        
+
 
 def get_datetime_from_delta(value, seconds):
     "Returns a Datetime value after subtracting given seconds."

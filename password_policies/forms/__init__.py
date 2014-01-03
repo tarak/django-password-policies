@@ -30,11 +30,11 @@ Has the following fields and methods:
     error_messages = {
         'password_mismatch': _("The two password fields didn't match."),
         'password_used': _("The new password was used before. "
-                                "Please enter another one."),
+                           "Please enter another one."),
     }
     new_password1 = PasswordPoliciesField(label=_("New password"),
-        max_length=settings.PASSWORD_MAX_LENGTH,
-        min_length=settings.PASSWORD_MIN_LENGTH)
+                                          max_length=settings.PASSWORD_MAX_LENGTH,
+                                          min_length=settings.PASSWORD_MIN_LENGTH)
     new_password2 = forms.CharField(label=_("New password confirmation"),
                                     widget=forms.PasswordInput)
 
@@ -128,10 +128,8 @@ Validates that old and new password are not too similar.
         new_password1 = cleaned_data.get("new_password1")
 
         if old_password and new_password1:
-            if old_password == new_password1 and \
-                not settings.PASSWORD_USE_HISTORY:
-                raise forms.ValidationError(
-                        self.error_messages['password_identical'])
+            if old_password == new_password1 and not settings.PASSWORD_USE_HISTORY:
+                raise forms.ValidationError(self.error_messages['password_identical'])
             else:
                 if settings.PASSWORD_DIFFERENCE_DISTANCE:
                     try:
@@ -142,8 +140,7 @@ Validates that old and new password are not too similar.
                         distance = Levenshtein.distance(old_password,
                                                         new_password1)
                         if distance < settings.PASSWORD_DIFFERENCE_DISTANCE:
-                            raise forms.ValidationError(
-                                    self.error_messages['password_similar'])
+                            raise forms.ValidationError(self.error_messages['password_similar'])
         return cleaned_data
 
     def save(self, commit=True):
@@ -156,7 +153,6 @@ PasswordPoliciesChangeForm.base_fields = SortedDict([
     (k, PasswordPoliciesChangeForm.base_fields[k])
     for k in ['old_password', 'new_password1', 'new_password2']
 ])
-
 
 
 class PasswordResetForm(forms.Form):
@@ -172,7 +168,8 @@ Has the following fields and methods:
         'unusable': _("The user account associated with this e-mail "
                       "address cannot reset the password."),
     }
-    email = forms.EmailField(label=_("E-mail"), max_length=75,help_text='help')
+    #TODO: Help text?
+    email = forms.EmailField(label=_("E-mail"), max_length=75, help_text='help')
 
     def clean_email(self):
         """
@@ -269,18 +266,16 @@ Has the following fields and methods:
         'password_mismatch': _("The two password fields didn't match."),
     }
     username = forms.RegexField(label=_("Username"), max_length=30,
-        regex=r'^[\w.@+-]+$',
-        help_text=_("Required. 30 characters or fewer. Letters, digits and "
-                      "@/./+/-/_ only."),
-        error_messages={
-            'invalid': _("This value may contain only letters, numbers and "
-                         "@/./+/-/_ characters.")})
+                                regex=r'^[\w.@+-]+$',
+                                help_text=_("Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."),
+                                error_messages={'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")}
+                                )
     password1 = PasswordPoliciesField(label=_("Password"),
-        max_length=settings.PASSWORD_MAX_LENGTH,
-        min_length=settings.PASSWORD_MIN_LENGTH)
+                                      max_length=settings.PASSWORD_MAX_LENGTH,
+                                      min_length=settings.PASSWORD_MIN_LENGTH)
     password2 = forms.CharField(label=_("Password confirmation"),
-        widget=forms.PasswordInput,
-        help_text=_("Enter the same password as above, for verification."))
+                                widget=forms.PasswordInput,
+                                help_text=_("Enter the same password as above, for verification."))
 
     def clean_username(self):
         """

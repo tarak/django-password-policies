@@ -63,15 +63,12 @@ defined in `RFC 4013`_.
 
     def _process(self, value):
         for code in force_text(value):
-            if stringprep.in_table_c12(code) or \
-            stringprep.in_table_c21_c22(code) or \
-            stringprep.in_table_c3(code) or \
-            stringprep.in_table_c4(code) or \
-            stringprep.in_table_c5(code) or \
-            stringprep.in_table_c6(code) or \
-            stringprep.in_table_c7(code) or \
-            stringprep.in_table_c8(code) or \
-            stringprep.in_table_c9(code):
+            #TODO: Is this long enough?
+            if stringprep.in_table_c12(code) or stringprep.in_table_c21_c22(code) or \
+                stringprep.in_table_c3(code) or stringprep.in_table_c4(code) or \
+                stringprep.in_table_c5(code) or stringprep.in_table_c6(code) or \
+                stringprep.in_table_c7(code) or stringprep.in_table_c8(code) or \
+                    stringprep.in_table_c9(code):
                 self.invalid = False
             if stringprep.in_table_d1(code):
                 self.r_and_al_cat = True
@@ -117,12 +114,12 @@ is greater than :py:attr:`~password_policies.conf.Settings.PASSWORD_MATCH_THRESH
         if not n:
             return m
 
-        row1 = [0] * (n+1)
-        for i in xrange(0,m):
-            row2 = [i+1]
-            for j in xrange(0,n):
-                cost = ( needle[i] != haystack[j] )
-                row2.append(min(row1[j+1]+1, row2[j]+1, row1[j]+cost))
+        row1 = [0] * (n + 1)
+        for i in xrange(0, m):
+            row2 = [i + 1]
+            for j in xrange(0, n):
+                cost = (needle[i] != haystack[j])
+                row2.append(min(row1[j + 1] + 1, row2[j] + 1, row1[j] + cost))
             row1 = row2
         return min(row1)
 
@@ -154,8 +151,7 @@ For more information read `RFC 4013, section 2.3`_.
     def __call__(self, value):
         super(BidirectionalValidator, self).__call__(value)
         if self.r_and_al_cat:
-            if self.l_cat or not stringprep.in_table_d1(self.first) or \
-            not stringprep.in_table_d1(self.last):
+            if self.l_cat or not stringprep.in_table_d1(self.first) or not stringprep.in_table_d1(self.last):
                 raise ValidationError(self.message, code=self.code)
 
 
@@ -182,7 +178,7 @@ Validates that a given password does not contain consecutive characters.
         if not self.get_max_count():
             return
         consecutive_found = False
-        for _,group in itertools.groupby(force_text(value)):
+        for _, group in itertools.groupby(force_text(value)):
             if len(list(group)) > self.get_max_count():
                 consecutive_found = True
         if consecutive_found:
@@ -285,7 +281,7 @@ the Shannon entropy of a password.
     short_min_entropy = settings.PASSWORD_MIN_ENTROPY_SHORT
 
     def __call__(self, value):
-        pwlen   = len(value)
+        pwlen = len(value)
         if pwlen < 100 and not self.short_min_entropy:
             return
         else:
@@ -293,18 +289,16 @@ the Shannon entropy of a password.
                 return
         ent = self.entropy(value)
         idealent = self.entropy_ideal(pwlen)
-        if (pwlen < 100 and ent / idealent < self.short_min_entropy) \
-            or (pwlen >= 100 and ent < self.long_min_entropy):
+        if (pwlen < 100 and ent / idealent < self.short_min_entropy) or (pwlen >= 100 and ent < self.long_min_entropy):
             raise ValidationError(self.message, code=self.code)
 
     def entropy(self, string):
         #Calculates the Shannon entropy of a string
         #
         # get probability of chars in string
-        prob = [ float(string.count(c)) / len(string) \
-                                    for c in dict.fromkeys(list(string)) ]
+        prob = [float(string.count(c)) / len(string) for c in dict.fromkeys(list(string))]
         # calculate the entropy
-        entropy = - sum([ p * math.log(p) / math.log(2.0) for p in prob ])
+        entropy = - sum([p * math.log(p) / math.log(2.0) for p in prob])
         return entropy
 
     def entropy_ideal(self, length):
@@ -430,7 +424,7 @@ Validates that a given password is not similar to an email address.
     message = _("The new password is similar to an email address.")
     user_regex = re.compile(
         r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*$"  # dot-atom
-        r'|^"([\001-\010\013\014\016-\037!#-\[\]-\177]|\\[\001-\011\013\014\016-\177])*"$)', # quoted-string
+        r'|^"([\001-\010\013\014\016-\037!#-\[\]-\177]|\\[\001-\011\013\014\016-\177])*"$)',  # quoted-string
         re.IGNORECASE)
     domain_regex = re.compile(
         r'(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?$)'  # domain

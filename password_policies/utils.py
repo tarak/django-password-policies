@@ -8,7 +8,7 @@ from password_policies.models import PasswordHistory
 
 class PasswordCheck(object):
     "Checks if a given user needs to change his/her password."
-    
+
     def __init__(self, user):
         self.user = user
         self.expiry_datetime = self.get_expiry_datetime()
@@ -26,7 +26,7 @@ exists the verification is successful.
         if self.user.password_change_required.count():
             return True
         return False
-    
+
     def is_expired(self):
         """Checks if a given user's password has expired.
 
@@ -37,7 +37,7 @@ exists the verification is successful.
         if PasswordHistory.objects.change_required(self.user):
             return True
         return False
-    
+
     def get_expiry_datetime(self):
         "Returns the date and time when the user's password has expired."
         seconds = settings.PASSWORD_DURATION_SECONDS

@@ -11,17 +11,17 @@ from password_policies.models import PasswordChangeRequired
 class PasswordPoliciesAdminForm(AdminPasswordChangeForm):
     """Enforces password policies in the admin interface.
 
-Use this form to enforce strong passwords in the admin interface.    
+Use this form to enforce strong passwords in the admin interface.
 """
     error_messages = {
         'password_mismatch': _("The two password fields didn't match."),
-        'password_used': _("The new password was used before. "
-                                "Please enter another one."),
+        'password_used': _("The new password was used before. Please enter another one.")
     }
-    
+
     password1 = PasswordPoliciesField(label=_("Password new"),
-        max_length=settings.PASSWORD_MAX_LENGTH,
-        min_length=settings.PASSWORD_MIN_LENGTH)
+                                      max_length=settings.PASSWORD_MAX_LENGTH,
+                                      min_length=settings.PASSWORD_MIN_LENGTH
+                                      )
 
     def clean_password1(self):
         """
@@ -40,12 +40,11 @@ Validates that a given password was not used before.
 
 
 class ForceChangeAdminForm(PasswordPoliciesAdminForm):
-    change_required = forms.BooleanField(initial=True,required=False, label=_('Must change?'))
+    change_required = forms.BooleanField(initial=True, required=False, label=_('Must change?'))
 
     def save(self, commit=True):
         user = super(ForceChangeAdminForm, self).save(commit=commit)
-        if self.cleaned_data["change_required"] and not \
-            PasswordChangeRequired.objects.filter(user=user).count():
+        if self.cleaned_data["change_required"] and not PasswordChangeRequired.objects.filter(user=user).count():
             PasswordChangeRequired.objects.create(user=user)
         return user
 
