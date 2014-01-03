@@ -148,8 +148,11 @@ Validates that old and new password are not too similar.
 
     def save(self, commit=True):
         user = super(PasswordPoliciesChangeForm, self).save(commit=commit)
-        if user.password_change_required.count():
-            user.password_change_required.all().delete()
+        try:
+            if user.password_change_required.count():
+                user.password_change_required.all().delete()
+        except PasswordChangeRequired.DoesNotExist:
+            pass
         return user
 
 PasswordPoliciesChangeForm.base_fields = SortedDict([
