@@ -77,7 +77,7 @@ To use this middleware you need to add it to the
         if PasswordChangeRequired.objects.filter(user=request.user).count():
             request.session[self.required] = True
             return
-        if request.session[self.checked] < self.now - self.expiry_datetime:
+        if request.session[self.checked] < self.expiry_datetime:
             try:
                 del request.session[self.last]
                 del request.session[self.checked]
