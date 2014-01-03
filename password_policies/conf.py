@@ -14,7 +14,7 @@ Default settings for django-password-policies.
                                                     'user__first_name',
                                                     'user__email',
                                                     'user__last_name',
-                                                    'user__username',]
+                                                    'user__username']
     #: Determines wether the :middleware:`PasswordChangeMiddleware`
     #: should ignore the logout views, allowing the user to log out
     #: even if a password change is required.
@@ -26,7 +26,7 @@ Default settings for django-password-policies.
     #: be performed if the user's password has expired.
     #:
     #: Defaults to 1 hour.
-    PASSWORD_CHECK_SECONDS = 60**2
+    PASSWORD_CHECK_SECONDS = 60 ** 2
     #: Specifies a list of common sequences to attempt to
     #: match a password against.
     PASSWORD_COMMON_SEQUENCES = [
@@ -58,7 +58,7 @@ Used by the :validator:`DictionaryValidator`.
     #: to change his/her password.
     #:
     #: Defaults to 60 days.
-    PASSWORD_DURATION_SECONDS = 24 * 60**3
+    PASSWORD_DURATION_SECONDS = 24 * 60 ** 3
     #: Determines which fields should be searched upon
     #: in the admin change list of
     #: the :class:`~password_policies.models.PasswordHistory`
@@ -66,7 +66,7 @@ Used by the :validator:`DictionaryValidator`.
                                             'user__first_name',
                                             'user__email',
                                             'user__last_name',
-                                            'user__username',]
+                                            'user__username']
     #: Specifies the number of user's previous passwords to
     #: remember when the password history is being used.
     #:

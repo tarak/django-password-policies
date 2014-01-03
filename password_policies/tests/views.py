@@ -6,6 +6,7 @@ from password_policies.tests.lib import BaseTest
 from password_policies.tests.lib import create_user
 from password_policies.tests.lib import passwords
 
+
 class PasswordChangeViewsTestCase(BaseTest):
 
     def setUp(self):
@@ -55,11 +56,9 @@ class PasswordChangeViewsTestCase(BaseTest):
         for the user and issues a redirect.
 
         """
-        data = {
-            'old_password': passwords[-1],
-            'new_password1': 'Chah+pher9k',
-            'new_password2': 'Chah+pher9k',
-            }
+        data = {'old_password': passwords[-1],
+                'new_password1': 'Chah+pher9k',
+                'new_password2': 'Chah+pher9k'}
         self.client.login(username='alice', password=data['old_password'])
         response = self.client.post(reverse('password_change'), data=data)
         self.assertEqual(PasswordHistory.objects.count(), 1)

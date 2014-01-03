@@ -49,7 +49,6 @@ A view to redirect to after a successfull change of a user's password.
         return super(PasswordChangeDoneView, self).dispatch(*args, **kwargs)
 
 
-
 class PasswordChangeFormView(FormView):
     """
 A view that allows logged in users to change their password.
@@ -205,7 +204,6 @@ if set, otherwise to the :class:`PasswordResetCompleteView`.
                                                               *args,
                                                               **kwargs)
         return self.render_to_response(self.get_context_data())
-
 
 
 class PasswordResetDoneView(LoggedOutMixin, TemplateView):

@@ -12,6 +12,7 @@ def force_password_change(modeladmin, request, queryset):
 force_password_change.short_description = _('Force password change for selected'
                                             ' users')
 
+
 class PasswordHistoryAdmin(admin.ModelAdmin):
     date_hierarchy = 'created'
     exclude = ('password',)
@@ -22,6 +23,7 @@ class PasswordHistoryAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return False
+
 
 class PasswordChangeRequiredAdmin(admin.ModelAdmin):
     date_hierarchy = 'created'
