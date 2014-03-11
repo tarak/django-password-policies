@@ -10,6 +10,7 @@ from django.contrib.auth.forms import AdminPasswordChangeForm
 from django.contrib.auth.models import User
 from django.contrib.sites.models import get_current_site
 from django.core import signing
+from django.core.exceptions import ObjectDoesNotExist
 from django.template import loader
 from django.utils.datastructures import SortedDict
 from django.utils.http import int_to_base36
@@ -148,8 +149,11 @@ Validates that old and new password are not too similar.
 
     def save(self, commit=True):
         user = super(PasswordPoliciesChangeForm, self).save(commit=commit)
-        if user.password_change_required.count():
-            user.password_change_required.all().delete()
+        try:
+            if user.password_change_required:
+                user.password_change_required.delete()
+        except ObjectDoesNotExist:
+            pass
         return user
 
 PasswordPoliciesChangeForm.base_fields = SortedDict([

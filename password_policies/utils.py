@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 from django.utils import timezone
+from django.core.exceptions import ObjectDoesNotExist
 
 from password_policies.conf import settings
 from password_policies.models import PasswordHistory
@@ -23,8 +24,11 @@ exists the verification is successful.
     ``False`` otherwise.
 :rtype: bool
 """
-        if self.user.password_change_required.count():
-            return True
+        try:
+            if self.user.password_change_required:
+                return True
+        except ObjectDoesNotExist:
+            pass
         return False
 
     def is_expired(self):
