@@ -1,5 +1,8 @@
 from django.db import models
+from django.db.models import signals
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth import get_user_model
 
 from password_policies.conf import settings
 from password_policies.managers import PasswordHistoryManager
@@ -52,3 +55,49 @@ Has the following fields:
         ordering = ['-created']
         verbose_name = _('password history entry')
         verbose_name_plural = _('password history entries')
+
+
+class PasswordProfile(models.Model):
+    """
+Stores a single password history entry, related to :model:`auth.User`.
+
+Has the following fields:
+"""
+    created = models.DateTimeField(verbose_name=_('created'), db_index=True,
+                                   help_text=_('The date the entry was '
+                                               'created.'))
+    last_changed = models.DateTimeField(verbose_name=_('last changed'), db_index=True,
+                                        help_text=_('The date the password was last changed.'))
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=_('user'),
+                                help_text=_('The user this password profile '
+                                            'belongs to.'),
+                                related_name='password_profile')
+
+    class Meta:
+        get_latest_by = 'created'
+        ordering = ['-created']
+        verbose_name = _('password profile')
+        verbose_name_plural = _('password profiles')
+
+
+def create_password_profile_signal(sender, instance, created, **kwargs):
+    if created:
+        now = timezone.now()
+        PasswordProfile.objects.create(user=instance, last_changed=now, created=now)
+
+def password_change_signal(sender, instance, **kwargs):
+    user_model = get_user_model()
+    try:
+        user = user_model.objects.get(pk=instance.pk)
+        password1 = getattr(user, settings.PASSWORD_MODEL_FIELD)
+        password2 = getattr(instance, settings.PASSWORD_MODEL_FIELD)
+        if not password1 == password2:
+            profile = PasswordProfile.objects.get(user=instance)
+            profile.last_changed = timezone.now()
+            profile.save()
+    except user_model.DoesNotExist:
+        pass
+
+signals.pre_save.connect(password_change_signal, sender=settings.AUTH_USER_MODEL, dispatch_uid='password_change_signal')
+
+signals.post_save.connect(create_password_profile_signal, sender=settings.AUTH_USER_MODEL, dispatch_uid='create_password_profile_signal')

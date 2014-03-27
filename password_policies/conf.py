@@ -59,6 +59,9 @@ Used by the :validator:`DictionaryValidator`.
     #:
     #: Defaults to 60 days.
     PASSWORD_DURATION_SECONDS = 24 * 60 ** 3
+    #: The field on the user model as defined by settings.AUTH_USER_MODEL
+    #: where the password is stored.
+    PASSWORD_MODEL_FIELD = "password"
     #: Determines which fields should be searched upon
     #: in the admin change list of
     #: the :class:`~password_policies.models.PasswordHistory`
