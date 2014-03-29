@@ -175,7 +175,7 @@ Has the following fields and methods:
         'unusable': _("The user account associated with this e-mail "
                       "address cannot reset the password."),
     }
-    #TODO: Help text?
+    # TODO: Help text?
     email = forms.EmailField(label=_("E-mail"), max_length=75, help_text='help')
 
     def clean_email(self):

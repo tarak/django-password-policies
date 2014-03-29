@@ -65,7 +65,7 @@ A view that allows logged in users to change their password.
     #: doc
     redirect_field_name = settings.REDIRECT_FIELD_NAME
 
-    #@method_decorator(sensitive_post_parameters)
+    # @method_decorator(sensitive_post_parameters)
     @method_decorator(csrf_protect)
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -141,7 +141,7 @@ class PasswordResetConfirmView(LoggedOutMixin, FormView):
     #: by :func:`django.contrib.views.password_reset_confirm`.
     template_name = 'registration/password_reset_confirm.html'
 
-    #@method_decorator(sensitive_post_parameters)
+    # @method_decorator(sensitive_post_parameters)
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
         self.uidb36 = args[0]
