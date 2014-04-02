@@ -2,6 +2,7 @@ from django.utils.encoding import force_unicode
 
 from password_policies.forms import PasswordPoliciesForm
 from password_policies.forms import PasswordPoliciesChangeForm
+from password_policies.forms import PasswordResetForm
 from password_policies.forms.fields import PasswordPoliciesField
 
 from password_policies.tests.lib import BaseTest
@@ -116,4 +117,26 @@ class PasswordPoliciesChangeFormTest(BaseTest):
                 'new_password1': 'Chah+pher9k',
                 'new_password2': 'Chah+pher9k'}
         form = PasswordPoliciesChangeForm(self.user, data)
+        self.assertTrue(form.is_valid())
+
+
+class PasswordResetFormTest(BaseTest):
+
+    def setUp(self):
+        self.user = create_user()
+        return super(PasswordResetFormTest, self).setUp()
+
+    def test_unusable_password(self):
+        self.user.set_unusable_password()
+        self.user.save()
+        data = {'email': self.user.email}
+        form = PasswordResetForm(data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form["email"].errors,
+                         [force_unicode(form.error_messages['unusable'])])
+        self.assertFalse(form.is_valid())
+
+    def test_success(self):
+        data = {'email': self.user.email}
+        form = PasswordResetForm(data)
         self.assertTrue(form.is_valid())
