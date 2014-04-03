@@ -1,10 +1,7 @@
 from __future__ import unicode_literals
 
 from django import forms
-try:
-    from django.contrib.auth.hashers import UNUSABLE_PASSWORD
-except ImportError:
-    from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
+from django.contrib.auth.hashers import is_password_usable
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.forms import AdminPasswordChangeForm
 from django.contrib.auth.models import User
@@ -187,7 +184,7 @@ Validates that an active user exists with the given email address.
                                                is_active=True)
         if not len(self.users_cache):
             raise forms.ValidationError(self.error_messages['unknown'])
-        if any((user.password == UNUSABLE_PASSWORD)
+        if any(not is_password_usable(user.password)
                for user in self.users_cache):
             raise forms.ValidationError(self.error_messages['unusable'])
         return email
