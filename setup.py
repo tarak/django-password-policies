@@ -26,7 +26,7 @@ and a mechanism to force password changes.
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Utilities'
     ],
-    install_requires=['django>=1.5,<=1.6.2',
+    install_requires=['django>=1.5',
                       'django-easysettings',
     ],
     test_suite='tests.main',
