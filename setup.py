@@ -28,6 +28,7 @@ and a mechanism to force password changes.
     ],
     install_requires=['django>=1.5',
                       'django-easysettings',
+                      'pytz',
     ],
     test_suite='tests.main',
 )
