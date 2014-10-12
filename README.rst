@@ -26,4 +26,4 @@ A detailled documentation is available on `the project's GitHub Pages`_.
 .. _`the project's GitHub Pages`: http://tarak.github.com/django-password-policies
 .. _`Django`: https://www.djangoproject.com/
 .. _`django-easysettings`: https://github.com/SmileyChris/django-easysettings
-.. _`pytz`: http://http://pythonhosted.org/pytz/
+.. _`pytz`: http://pythonhosted.org/pytz/
