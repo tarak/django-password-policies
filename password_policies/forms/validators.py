@@ -5,7 +5,6 @@ import unicodedata
 import re
 import stringprep
 
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.encoding import smart_unicode
 from django.utils.encoding import force_text
