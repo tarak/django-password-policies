@@ -57,6 +57,16 @@ class PasswordPoliciesFieldTest(BaseTest):
                                {u'\xc1\xc2\xc3\xc4\u0662\xc5\u20ac': [u'Ensure this value has at least 8 characters (it has 7).']},
                                field_kwargs={'min_length': 8})
 
+    def test_password_field_8(self):
+        self.assertFieldOutput(PasswordPoliciesField,
+                               {u'Ch\xc4d+pher9k': u'Ch\xc4d+pher9k'},
+                               {u'a': [u'The new password is based on a common sequence of characters.',
+                                       u'The new password must contain 3 or more letters.',
+                                       u'The new password must contain 1 or more number.',
+                                       u'The new password must contain 1 or more symbol.',
+                                       u'The new password is not varied enough.']}
+                               )
+
 
 class PasswordPoliciesFormTest(BaseTest):
 
