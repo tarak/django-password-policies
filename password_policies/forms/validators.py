@@ -5,7 +5,6 @@ import unicodedata
 import re
 import stringprep
 
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.encoding import smart_unicode
 from django.utils.encoding import force_text
@@ -289,7 +288,11 @@ the Shannon entropy of a password.
                 return
         ent = self.entropy(value)
         idealent = self.entropy_ideal(pwlen)
-        if (pwlen < 100 and ent / idealent < self.short_min_entropy) or (pwlen >= 100 and ent < self.long_min_entropy):
+        try:
+            ent_quotient = ent / idealent
+        except ZeroDivisionError:
+            ent_quotient = 0
+        if (pwlen < 100 and ent_quotient < self.short_min_entropy) or (pwlen >= 100 and ent < self.long_min_entropy):
             raise ValidationError(self.message, code=self.code)
 
     def entropy(self, string):
