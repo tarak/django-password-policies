@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -7,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Setting up the application &mdash; django-password-policies 0.2 documentation</title>
+    <title>Setting up the application &mdash; django-password-policies 0.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -15,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.2',
+        VERSION:     '0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="django-password-policies 0.2 documentation" href="../index.html" />
+    <link rel="top" title="django-password-policies 0.3 documentation" href="../index.html" />
     <link rel="next" title="Security" href="security.html" />
     <link rel="prev" title="Installation" href="install.html" />
  
@@ -68,7 +67,7 @@
     <div class="document">
   <div id="custom-doc" class="yui-t6">
     <div id="hd">
-      <h1><a href="../index.html">django-password-policies 0.2 documentation</a></h1>
+      <h1><a href="../index.html">django-password-policies 0.3 documentation</a></h1>
       <div id="global-nav">
         <a title="Home page" href="../index.html">Home</a>  |
         <a title="Table of contents" href="../contents.html">Table of contents</a>  |
@@ -78,7 +77,7 @@
       <div class="nav">
     &laquo; <a href="install.html" title="Installation">previous</a> 
      |
-    <a title="django-password-policies 0.2 documentation" href="../index.html" accesskey="U">up</a>
+    <a title="django-password-policies 0.3 documentation" href="../index.html" accesskey="U">up</a>
    |
     <a href="security.html" title="Security">next</a> &raquo;</div>
     </div>
@@ -426,11 +425,20 @@ file:</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="serializer">
+<span id="setup-serializer"></span><h2>Serializer<a class="headerlink" href="#serializer" title="Permalink to this headline">¶</a></h2>
+<p>For now this app uses the PickleSerializer. This needs to be set up in the Django settings
+file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">SESSION_SERIALIZER</span><span class="o">=</span><span class="s">&#39;django.contrib.sessions.serializers.PickleSerializer&#39;</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="creating-the-database-tables">
 <span id="setup-create-db-tables"></span><h2>Creating the database tables<a class="headerlink" href="#creating-the-database-tables" title="Permalink to this headline">¶</a></h2>
 <p>To create the database tables needed by <tt class="docutils literal"><span class="pre">django-password-policies</span></tt> simply run
 the following inside a project&#8217;s root directory:</p>
-<div class="highlight-python"><pre>$ python manage.py syncdb</pre>
+<div class="highlight-python"><div class="highlight"><pre>$ python manage.py syncdb
+</pre></div>
 </div>
 </div>
 </div>
@@ -451,6 +459,7 @@ the following inside a project&#8217;s root directory:</p>
 <li><a class="reference internal" href="#required-templates">Required templates</a></li>
 <li><a class="reference internal" href="#setting-up-urls">Setting up URLs</a></li>
 <li><a class="reference internal" href="#adding-the-app-to-the-installed-applications">Adding the app to the installed applications</a></li>
+<li><a class="reference internal" href="#serializer">Serializer</a></li>
 <li><a class="reference internal" href="#creating-the-database-tables">Creating the database tables</a></li>
 </ul>
 </li>
@@ -468,7 +477,7 @@ the following inside a project&#8217;s root directory:</p>
   <h3>You are here:</h3>
   <ul>
       <li>
-        <a href="../index.html">django-password-policies 0.2 documentation</a>
+        <a href="../index.html">django-password-policies 0.3 documentation</a>
         
         <ul><li>Setting up the application</li></ul>
         
@@ -504,7 +513,7 @@ the following inside a project&#8217;s root directory:</p>
       <div class="nav">
     &laquo; <a href="install.html" title="Installation">previous</a> 
      |
-    <a title="django-password-policies 0.2 documentation" href="../index.html" accesskey="U">up</a>
+    <a title="django-password-policies 0.3 documentation" href="../index.html" accesskey="U">up</a>
    |
     <a href="security.html" title="Security">next</a> &raquo;</div>
     </div>

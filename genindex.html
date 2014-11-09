@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -9,15 +7,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Index &mdash; django-password-policies 0.2 documentation</title>
+    <title>Index &mdash; django-password-policies 0.3 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
-        VERSION:     '0.2',
+        URL_ROOT:    './',
+        VERSION:     '0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="django-password-policies 0.2 documentation" href="index.html" />
+    <link rel="top" title="django-password-policies 0.3 documentation" href="index.html" />
  
 <script type="text/javascript" src="templatebuiltins.js"></script>
 <script type="text/javascript">
@@ -68,7 +66,7 @@
     <div class="document">
   <div id="custom-doc" class="">
     <div id="hd">
-      <h1><a href="index.html">django-password-policies 0.2 documentation</a></h1>
+      <h1><a href="index.html">django-password-policies 0.3 documentation</a></h1>
       <div id="global-nav">
         <a title="Home page" href="index.html">Home</a>  |
         <a title="Table of contents" href="contents.html">Table of contents</a>  |
@@ -76,7 +74,7 @@
         <a title="Module index" href="py-modindex.html">Modules</a>
       </div>
       <div class="nav">
-    <a title="django-password-policies 0.2 documentation" href="index.html" accesskey="U">up</a></div>
+    <a title="django-password-policies 0.3 documentation" href="index.html" accesskey="U">up</a></div>
     </div>
     
     <div id="bd">
@@ -346,9 +344,15 @@
   </dt>
 
       
-  <dt><a href="api/password_policies.models.html#password_policies.models.PasswordHistory.created">created (password_policies.models.PasswordHistory attribute)</a>
+  <dt><a href="api/password_policies.models.html#password_policies.models.PasswordChangeRequired.created">created (password_policies.models.PasswordChangeRequired attribute)</a>
   </dt>
 
+      <dd><dl>
+        
+  <dt><a href="api/password_policies.models.html#password_policies.models.PasswordHistory.created">(password_policies.models.PasswordHistory attribute)</a>
+  </dt>
+
+      </dl></dd>
   </dl></td>
 </tr></table>
 
@@ -724,9 +728,15 @@
 
       </dl></dd>
       
-  <dt><a href="api/password_policies.models.html#password_policies.models.PasswordHistory.Meta">Meta (password_policies.models.PasswordHistory attribute)</a>
+  <dt><a href="api/password_policies.models.html#password_policies.models.PasswordChangeRequired.Meta">Meta (password_policies.models.PasswordChangeRequired attribute)</a>
   </dt>
 
+      <dd><dl>
+        
+  <dt><a href="api/password_policies.models.html#password_policies.models.PasswordHistory.Meta">(password_policies.models.PasswordHistory attribute)</a>
+  </dt>
+
+      </dl></dd>
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
@@ -750,6 +760,10 @@
   </dt>
 
       <dd><dl>
+        
+  <dt><a href="api/password_policies.models.html#std:model-PasswordChangeRequired">PasswordChangeRequired</a>
+  </dt>
+
         
   <dt><a href="api/password_policies.models.html#std:model-PasswordHistory">PasswordHistory</a>
   </dt>
@@ -878,6 +892,10 @@
   </dt>
 
       
+  <dt><a href="api/password_policies.conf.html#password_policies.conf.Settings.PASSWORD_CHANGE_REQUIRED_ADMIN_SEARCH_FIELDS">PASSWORD_CHANGE_REQUIRED_ADMIN_SEARCH_FIELDS (password_policies.conf.Settings attribute)</a>
+  </dt>
+
+      
   <dt><a href="api/password_policies.conf.html#password_policies.conf.Settings.PASSWORD_CHECK_SECONDS">PASSWORD_CHECK_SECONDS (password_policies.conf.Settings attribute)</a>
   </dt>
 
@@ -895,6 +913,10 @@
 
       
   <dt><a href="api/password_policies.conf.html#password_policies.conf.Settings.PASSWORD_DURATION_SECONDS">PASSWORD_DURATION_SECONDS (password_policies.conf.Settings attribute)</a>
+  </dt>
+
+      
+  <dt><a href="api/password_policies.conf.html#password_policies.conf.Settings.PASSWORD_HISTORY_ADMIN_SEARCH_FIELDS">PASSWORD_HISTORY_ADMIN_SEARCH_FIELDS (password_policies.conf.Settings attribute)</a>
   </dt>
 
       
@@ -1045,6 +1067,21 @@
       </dl></dd>
       
   <dt><a href="api/password_policies.middleware.html#password_policies.middleware.PasswordChangeMiddleware">PasswordChangeMiddleware (class in password_policies.middleware)</a>
+  </dt>
+
+      
+  <dt>
+    PasswordChangeRequired
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="api/password_policies.models.html#std:model-PasswordChangeRequired">model</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="api/password_policies.models.html#password_policies.models.PasswordChangeRequired">PasswordChangeRequired (class in password_policies.models)</a>
   </dt>
 
       
@@ -1358,9 +1395,15 @@
   </dt>
 
       
-  <dt><a href="api/password_policies.models.html#password_policies.models.PasswordHistory.user">user (password_policies.models.PasswordHistory attribute)</a>
+  <dt><a href="api/password_policies.models.html#password_policies.models.PasswordChangeRequired.user">user (password_policies.models.PasswordChangeRequired attribute)</a>
   </dt>
 
+      <dd><dl>
+        
+  <dt><a href="api/password_policies.models.html#password_policies.models.PasswordHistory.user">(password_policies.models.PasswordHistory attribute)</a>
+  </dt>
+
+      </dl></dd>
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
@@ -1705,7 +1748,7 @@
     
     <div id="ft">
       <div class="nav">
-    <a title="django-password-policies 0.2 documentation" href="index.html" accesskey="U">up</a></div>
+    <a title="django-password-policies 0.3 documentation" href="index.html" accesskey="U">up</a></div>
     </div>
   </div>
 
