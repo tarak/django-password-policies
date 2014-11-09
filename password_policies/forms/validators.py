@@ -8,7 +8,7 @@ import stringprep
 from django.core.exceptions import ValidationError
 from django.utils.encoding import smart_unicode
 from django.utils.encoding import force_text
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ungettext
 
 from password_policies.conf import settings
