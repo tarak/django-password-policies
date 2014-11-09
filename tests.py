@@ -26,9 +26,7 @@ settings.INSTALLED_APPS = (
 def run_tests(settings):
     from django.test.utils import get_runner
     from django.utils.termcolors import colorize
-    from django.test.utils import setup_test_environment
     db_conf = settings.DATABASES['default']
-    setup_test_environment()
     output = []
     msg = "Starting tests for db backend: %s" % db_conf['ENGINE']
     embracer = '=' * len(msg)
@@ -58,4 +56,6 @@ if __name__ == '__main__':
     main()
     version = django.get_version()
     if version.startswith("1.7"):
+        from django.core.wsgi import get_wsgi_application
+        application = get_wsgi_application()
         django.setup()
