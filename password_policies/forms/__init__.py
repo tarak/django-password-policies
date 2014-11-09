@@ -179,8 +179,7 @@ Has the following fields and methods:
 Validates that an active user exists with the given email address.
 """
         email = self.cleaned_data["email"]
-        self.users_cache = get_user_model().objects.filter(email__iexact=email,
-                                               is_active=True)
+        self.users_cache = get_user_model().objects.filter(email__iexact=email, is_active=True)
         if not len(self.users_cache):
             raise forms.ValidationError(self.error_messages['unknown'])
         if any(not is_password_usable(user.password)
