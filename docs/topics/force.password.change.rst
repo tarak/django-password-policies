@@ -41,7 +41,7 @@ Setting password expiry
 
 To customize the duration of a password the following setting can be added to a
 project's settings file::
-    
+
     # Defaults to 60 days.
     PASSWORD_DURATION_SECONDS = 24 * 60**3
 

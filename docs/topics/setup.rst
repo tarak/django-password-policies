@@ -15,20 +15,20 @@ except the templates to send the password reset email.
 
 .. note::
   Because ``django-password-policies`` is intended to be highly reusable it does
-  not include any other templates than the ones used for testing the 
+  not include any other templates than the ones used for testing the
   application. It is left to programmers using ``django-password-policies`` to
   create templates for projects as needed.
 
 * ``registration/password_change_done.html``
     Used in the view :view:`PasswordChangeDoneView`.
-    
+
     Displays a message that a password change has been completed
     successfully. Has no context variables.
 * ``registration/password_change_form.html``
     Used in the view :view:`PasswordChangeFormView`.
-    
+
     Displays the form to change a password. Has the following context variables:
-    
+
     + ``form``
         The form used to change the user's password.
     + ``next``
@@ -37,7 +37,7 @@ except the templates to send the password reset email.
         By default, the path that the user should be redirected to upon
         successful password change is stored in a query string parameter called
         "next".
-        
+
         Note that if you provide a value to ``redirect_field_name``, you will most
         likely need to customize your login template as well, since the template
         context variable which stores the redirect path will use the value of
@@ -45,32 +45,32 @@ except the templates to send the password reset email.
 
 * ``registration/password_reset_complete.html``
     Used in the view :view:`PasswordResetCompleteView`.
-    
+
     Displays a message that a password reset has been completed
     successfully. Has the following context variables:
-    
+
     + ``login_url``
         The URL of the login page.
 
 * ``registration/password_reset_confirm.html``
     Used in the view :view:`PasswordResetConfirmView`.
-    
+
     Displays the form to reset a password. Has the following context variables:
-    
+
     + ``form``
         The form used to reset the user's password.
 
 * ``registration/password_reset_done.html``
     Used in the view :view:`PasswordResetDoneView`.
-    
+
     Displays a message that a password reset has been started and that an email
     with instructions has been sent to the user. Has no context variables.
 * ``registration/password_reset_email.html``
     Used in the form :form:`PasswordResetForm` to send the password reset email.
-    
+
     This template is used to generate an HTML-attachment for the email. Has the
     following context variables:
-    
+
     + ``domain``
         The domain name.
     + ``site_name``
@@ -92,10 +92,10 @@ except the templates to send the password reset email.
 
 * ``registration/password_reset_email.txt``
     Used in the form :form:`PasswordResetForm` to send the password reset email.
-    
+
     This template is used to generate the message body of the email. Has the
     following context variables:
-    
+
     + ``domain``
         The domain name.
     + ``site_name``
@@ -117,18 +117,18 @@ except the templates to send the password reset email.
 
 * ``registration/password_reset_form.html``
     Used in the view :view:`PasswordResetFormView`.
-    
+
     Displays the form to start a password reset. Has the following context
     variables:
-    
+
     * ``form``
         The form used to identify the user  by his/her email address.
 * ``registration/password_reset_subject.txt``
     Used in the form :form:`PasswordResetForm` to send the password reset email.
-    
+
     This template is used to generate the subject of the email. Has the
     following context variables:
-    
+
     + ``domain``
         The domain name.
     + ``site_name``
@@ -190,6 +190,16 @@ file::
         # ...other installed applications...
     )
 
+.. _setup-serializer:
+
+Serializer
+============================
+
+For now this app uses the PickleSerializer. This needs to be set up in the Django settings
+file::
+
+    SESSION_SERIALIZER='django.contrib.sessions.serializers.PickleSerializer'
+
 .. _setup-create-db-tables:
 
 Creating the database tables
@@ -199,4 +209,3 @@ To create the database tables needed by ``django-password-policies`` simply run
 the following inside a project's root directory::
 
     $ python manage.py syncdb
-
