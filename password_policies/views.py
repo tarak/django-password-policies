@@ -1,6 +1,6 @@
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core import signing
 from django.core.urlresolvers import reverse
 from django.shortcuts import resolve_url
@@ -19,6 +19,8 @@ from password_policies.forms import PasswordPoliciesForm
 from password_policies.forms import PasswordPoliciesChangeForm
 from password_policies.forms import PasswordResetForm
 
+
+User = get_user_model()
 
 class LoggedOutMixin(View):
     """
