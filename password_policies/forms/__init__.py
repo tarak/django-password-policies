@@ -14,7 +14,6 @@ from django.utils.datastructures import SortedDict
 from django.utils.http import int_to_base36
 from django.utils.translation import ugettext as _
 
-
 from password_policies.conf import settings
 from password_policies.forms.fields import PasswordPoliciesField
 from password_policies.models import PasswordHistory
@@ -22,6 +21,7 @@ from password_policies.models import PasswordChangeRequired
 
 
 User = get_user_model()
+
 
 class PasswordPoliciesForm(forms.Form):
     """

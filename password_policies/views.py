@@ -22,6 +22,7 @@ from password_policies.forms import PasswordResetForm
 
 User = get_user_model()
 
+
 class LoggedOutMixin(View):
     """
 A view mixin which verifies that the user has not authenticated.

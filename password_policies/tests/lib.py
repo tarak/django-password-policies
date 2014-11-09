@@ -12,6 +12,7 @@ from password_policies.models import PasswordHistory
 
 User = get_user_model()
 
+
 passwords = [
     'ohl"ahn8aiSu',
     'la]ePhae1Ies',
