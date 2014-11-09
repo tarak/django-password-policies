@@ -20,9 +20,6 @@ from password_policies.forms import PasswordPoliciesChangeForm
 from password_policies.forms import PasswordResetForm
 
 
-User = get_user_model()
-
-
 class LoggedOutMixin(View):
     """
 A view mixin which verifies that the user has not authenticated.
@@ -154,8 +151,8 @@ class PasswordResetConfirmView(LoggedOutMixin, FormView):
         if self.uidb36 and self.timestamp and self.signature:
             try:
                 uid_int = base36_to_int(self.uidb36)
-                self.user = User.objects.get(id=uid_int)
-            except (ValueError, User.DoesNotExist):
+                self.user = get_user_model().objects.get(id=uid_int)
+            except (ValueError, get_user_model().DoesNotExist):
                 self.user = None
             else:
                 signer = signing.TimestampSigner()

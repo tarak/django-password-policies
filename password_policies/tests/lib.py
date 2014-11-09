@@ -10,9 +10,6 @@ from password_policies.conf import settings
 from password_policies.models import PasswordHistory
 
 
-User = get_user_model()
-
-
 passwords = [
     'ohl"ahn8aiSu',
     'la]ePhae1Ies',
@@ -71,7 +68,7 @@ This function dynamically creates an user with following properties:
         date_joined = get_datetime_from_delta(timezone.now(), seconds)
     if not last_login:
         last_login = date_joined
-    user = User(username=username, email=email, is_active=True,
+    user = get_user_model()(username=username, email=email, is_active=True,
                 last_login=last_login, date_joined=date_joined)
     user.set_password(raw_password)
     if commit:

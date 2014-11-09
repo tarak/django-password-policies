@@ -19,9 +19,6 @@ from password_policies.models import PasswordHistory
 from password_policies.models import PasswordChangeRequired
 
 
-User = get_user_model()
-
-
 class PasswordPoliciesForm(forms.Form):
     """
 A form that lets a user set his/her password without entering the
@@ -182,7 +179,7 @@ Has the following fields and methods:
 Validates that an active user exists with the given email address.
 """
         email = self.cleaned_data["email"]
-        self.users_cache = User.objects.filter(email__iexact=email,
+        self.users_cache = get_user_model().objects.filter(email__iexact=email,
                                                is_active=True)
         if not len(self.users_cache):
             raise forms.ValidationError(self.error_messages['unknown'])
@@ -288,7 +285,7 @@ Has the following fields and methods:
 Validates that the username is not already taken.
 """
         username = self.cleaned_data["username"]
-        if username and not User.objects.filter(username__iexact=username).count():
+        if username and not get_user_model().objects.filter(username__iexact=username).count():
             return username
         raise forms.ValidationError(self.error_messages['duplicate_username'])
 
