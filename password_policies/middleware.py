@@ -70,23 +70,28 @@ To use this middleware you need to add it to the
             request.session[self.required] = False
 
     def _check_necessary(self, request):
+
         if not request.session.get(self.checked, None):
             request.session[self.checked] = self.now
-        # If a password change is enforced we won't check
-        # the user's password history, thus reducing DB hits...
-        if PasswordChangeRequired.objects.filter(user=request.user).count():
-            request.session[self.required] = True
-            return
-        if request.session[self.checked] < self.expiry_datetime:
-            try:
-                del request.session[self.last]
-                del request.session[self.checked]
-                del request.session[self.required]
-                del request.session[self.expired]
-            except KeyError:
-                pass
-        if settings.PASSWORD_USE_HISTORY:
-            self._check_history(request)
+
+            #  If the PASSWORD_CHECK_ONLY_AT_LOGIN is set, then only check at the beginning of session, which we can
+            #  tell by self.now time having just been set.
+        if not settings.PASSWORD_CHECK_ONLY_AT_LOGIN or request.session.get(self.checked, None) == self.now:
+            # If a password change is enforced we won't check
+            # the user's password history, thus reducing DB hits...
+            if PasswordChangeRequired.objects.filter(user=request.user).count():
+                request.session[self.required] = True
+                return
+            if request.session[self.checked] < self.expiry_datetime:
+                try:
+                    del request.session[self.last]
+                    del request.session[self.checked]
+                    del request.session[self.required]
+                    del request.session[self.expired]
+                except KeyError:
+                    pass
+            if settings.PASSWORD_USE_HISTORY:
+                self._check_history(request)
 
     def _is_excluded_path(self, actual_path):
         paths = settings.PASSWORD_CHANGE_MIDDLEWARE_EXCLUDED_PATHS
