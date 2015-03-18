@@ -89,6 +89,7 @@ is set to ``True``.
             password = make_password(new_password)
             PasswordHistory.objects.create(password=password, user=self.user)
             PasswordHistory.objects.delete_expired(self.user)
+        PasswordChangeRequired.objects.filter(user=self.user).delete()
         return self.user
 
 
