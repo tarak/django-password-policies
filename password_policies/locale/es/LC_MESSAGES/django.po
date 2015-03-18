@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-17 11:22+0100\n"
-"PO-Revision-Date: 2015-03-17 11:22+0100\n"
+"POT-Creation-Date: 2015-03-18 13:06+0100\n"
+"PO-Revision-Date: 2015-03-18 13:06+0100\n"
 "Last-Translator: Jesús Zoyo <jzoyo@apsl.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -127,14 +127,12 @@ msgstr "Nombre de usuario"
 
 #: forms/__init__.py:272
 msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
-msgstr ""
-"Obligatorio. 30 caracteres o menos. Sólo letras, dígitos y @ / / + / -. / _"
+msgstr "Obligatorio. 30 caracteres o menos. Sólo letras, dígitos y @/./+/-/_"
 
 #: forms/__init__.py:273
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
 msgstr ""
-"Este valor sólo puede contener letras, números y los caracteres @ / / + / "
-"-. / _"
+"Este valor sólo puede contener letras, números y los caracteres @/./+/-/_"
 
 #: forms/__init__.py:275
 msgid "Password"
