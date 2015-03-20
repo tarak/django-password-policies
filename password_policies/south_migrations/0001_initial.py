@@ -25,14 +25,12 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'password_policies', ['PasswordHistory'])
 
-
     def backwards(self, orm):
         # Deleting model 'PasswordChangeRequired'
         db.delete_table(u'password_policies_passwordchangerequired')
 
         # Deleting model 'PasswordHistory'
         db.delete_table(u'password_policies_passwordhistory')
-
 
     models = {
         u'auth.group': {
