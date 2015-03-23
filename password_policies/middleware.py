@@ -92,6 +92,10 @@ To use this middleware you need to add it to the
                     pass
             if settings.PASSWORD_USE_HISTORY:
                 self._check_history(request)
+        else:
+            # In the case where PASSWORD_CHECK_ONLY_AT_LOGIN is true, the required key is not removed,
+            # therefore causing a never ending password update loop
+            request.session.pop(self.required)
 
     def _is_excluded_path(self, actual_path):
         paths = settings.PASSWORD_CHANGE_MIDDLEWARE_EXCLUDED_PATHS
