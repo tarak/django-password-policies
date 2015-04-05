@@ -24,12 +24,14 @@ settings.INSTALLED_APPS = (
 )
 
 def run_tests(settings):
+    # Run Django setup (1.7+).
+    try:
+        django.setup()
+    except AttributeError:
+        pass  # This is Django < 1.7
     from django.test.utils import get_runner
     from django.utils.termcolors import colorize
     from django.test.utils import setup_test_environment
-    version = django.get_version()
-    if version.startswith("1.7"):
-        django.setup()
     db_conf = settings.DATABASES['default']
     setup_test_environment()
     output = []
