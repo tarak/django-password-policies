@@ -92,6 +92,10 @@ To use this middleware you need to add it to the
                     pass
             if settings.PASSWORD_USE_HISTORY:
                 self._check_history(request)
+        else:
+            # In the case where PASSWORD_CHECK_ONLY_AT_LOGIN is true, the required key is not removed,
+            # therefore causing a never ending password update loop
+            request.session[self.required] = False
 
     def _is_excluded_path(self, actual_path):
         paths = settings.PASSWORD_CHANGE_MIDDLEWARE_EXCLUDED_PATHS
@@ -111,7 +115,8 @@ To use this middleware you need to add it to the
             else:
                 paths.append(r'^%s$' % logout_url)
             try:
-                logout_url = resolve(u'/admin/logout/')
+                logout_url = u'/admin/logout/'
+                resolve(logout_url)
             except Resolver404:
                 pass
             else:
