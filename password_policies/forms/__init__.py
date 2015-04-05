@@ -9,7 +9,14 @@ from django.contrib.sites.models import get_current_site
 from django.core import signing
 from django.core.exceptions import ObjectDoesNotExist
 from django.template import loader
-from django.utils.datastructures import SortedDict
+
+try:
+    # SortedDict is deprecated as of Django 1.7 and will be removed in Django 1.9.
+    # https://code.djangoproject.com/wiki/SortedDict
+    from collections import OrderedDict as SortedDict
+except ImportError:
+    from django.utils.datastructures import SortedDict
+
 from django.utils.http import int_to_base36
 from django.utils.translation import ugettext_lazy as _
 
