@@ -1,6 +1,6 @@
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core import signing
 from django.core.urlresolvers import reverse
 from django.shortcuts import resolve_url
@@ -65,7 +65,7 @@ A view that allows logged in users to change their password.
     #: doc
     redirect_field_name = settings.REDIRECT_FIELD_NAME
 
-    #@method_decorator(sensitive_post_parameters)
+    # @method_decorator(sensitive_post_parameters)
     @method_decorator(csrf_protect)
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -141,7 +141,7 @@ class PasswordResetConfirmView(LoggedOutMixin, FormView):
     #: by :func:`django.contrib.views.password_reset_confirm`.
     template_name = 'registration/password_reset_confirm.html'
 
-    #@method_decorator(sensitive_post_parameters)
+    # @method_decorator(sensitive_post_parameters)
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
         self.uidb36 = args[0]
@@ -151,8 +151,8 @@ class PasswordResetConfirmView(LoggedOutMixin, FormView):
         if self.uidb36 and self.timestamp and self.signature:
             try:
                 uid_int = base36_to_int(self.uidb36)
-                self.user = User.objects.get(id=uid_int)
-            except (ValueError, User.DoesNotExist):
+                self.user = get_user_model().objects.get(id=uid_int)
+            except (ValueError, get_user_model().DoesNotExist):
                 self.user = None
             else:
                 signer = signing.TimestampSigner()

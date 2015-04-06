@@ -1,20 +1,24 @@
 from __future__ import unicode_literals
 
 from django import forms
-try:
-    from django.contrib.auth.hashers import UNUSABLE_PASSWORD
-except ImportError:
-    from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
+from django.contrib.auth.hashers import is_password_usable
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.forms import AdminPasswordChangeForm
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.sites.models import get_current_site
 from django.core import signing
+from django.core.exceptions import ObjectDoesNotExist
 from django.template import loader
-from django.utils.datastructures import SortedDict
-from django.utils.http import int_to_base36
-from django.utils.translation import ugettext as _
 
+try:
+    # SortedDict is deprecated as of Django 1.7 and will be removed in Django 1.9.
+    # https://code.djangoproject.com/wiki/SortedDict
+    from collections import OrderedDict as SortedDict
+except ImportError:
+    from django.utils.datastructures import SortedDict
+
+from django.utils.http import int_to_base36
+from django.utils.translation import ugettext_lazy as _
 
 from password_policies.conf import settings
 from password_policies.forms.fields import PasswordPoliciesField
@@ -149,9 +153,9 @@ Validates that old and new password are not too similar.
     def save(self, commit=True):
         user = super(PasswordPoliciesChangeForm, self).save(commit=commit)
         try:
-            if user.password_change_required.count():
-                user.password_change_required.all().delete()
-        except PasswordChangeRequired.DoesNotExist:
+            if user.password_change_required:
+                user.password_change_required.delete()
+        except ObjectDoesNotExist:
             pass
         return user
 
@@ -174,7 +178,7 @@ Has the following fields and methods:
         'unusable': _("The user account associated with this e-mail "
                       "address cannot reset the password."),
     }
-    #TODO: Help text?
+    # TODO: Help text?
     email = forms.EmailField(label=_("E-mail"), max_length=75, help_text='help')
 
     def clean_email(self):
@@ -182,11 +186,10 @@ Has the following fields and methods:
 Validates that an active user exists with the given email address.
 """
         email = self.cleaned_data["email"]
-        self.users_cache = User.objects.filter(email__iexact=email,
-                                               is_active=True)
+        self.users_cache = get_user_model().objects.filter(email__iexact=email, is_active=True)
         if not len(self.users_cache):
             raise forms.ValidationError(self.error_messages['unknown'])
-        if any((user.password == UNUSABLE_PASSWORD)
+        if any(not is_password_usable(user.password)
                for user in self.users_cache):
             raise forms.ValidationError(self.error_messages['unusable'])
         return email
@@ -288,7 +291,7 @@ Has the following fields and methods:
 Validates that the username is not already taken.
 """
         username = self.cleaned_data["username"]
-        if username and not User.objects.filter(username__iexact=username).count():
+        if username and not get_user_model().objects.filter(username__iexact=username).count():
             return username
         raise forms.ValidationError(self.error_messages['duplicate_username'])
 

@@ -5,11 +5,10 @@ import unicodedata
 import re
 import stringprep
 
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.encoding import smart_unicode
 from django.utils.encoding import force_text
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ungettext
 
 from password_policies.conf import settings
@@ -63,7 +62,7 @@ defined in `RFC 4013`_.
 
     def _process(self, value):
         for code in force_text(value):
-            #TODO: Is this long enough?
+            # TODO: Is this long enough?
             if stringprep.in_table_c12(code) or stringprep.in_table_c21_c22(code) or \
                 stringprep.in_table_c3(code) or stringprep.in_table_c4(code) or \
                 stringprep.in_table_c5(code) or stringprep.in_table_c6(code) or \
@@ -109,7 +108,7 @@ is greater than :py:attr:`~password_policies.conf.Settings.PASSWORD_MATCH_THRESH
         m, n = len(needle), len(haystack)
 
         if m == 1:
-            if not needle in haystack:
+            if needle not in haystack:
                 return -1
         if not n:
             return m
@@ -289,11 +288,15 @@ the Shannon entropy of a password.
                 return
         ent = self.entropy(value)
         idealent = self.entropy_ideal(pwlen)
-        if (pwlen < 100 and ent / idealent < self.short_min_entropy) or (pwlen >= 100 and ent < self.long_min_entropy):
+        try:
+            ent_quotient = ent / idealent
+        except ZeroDivisionError:
+            ent_quotient = 0
+        if (pwlen < 100 and ent_quotient < self.short_min_entropy) or (pwlen >= 100 and ent < self.long_min_entropy):
             raise ValidationError(self.message, code=self.code)
 
     def entropy(self, string):
-        #Calculates the Shannon entropy of a string
+        # Calculates the Shannon entropy of a string
         #
         # get probability of chars in string
         prob = [float(string.count(c)) / len(string) for c in dict.fromkeys(list(string))]
@@ -302,7 +305,7 @@ the Shannon entropy of a password.
         return entropy
 
     def entropy_ideal(self, length):
-        #Calculates the ideal Shannon entropy of a string with given length
+        # Calculates the ideal Shannon entropy of a string with given length
         prob = 1.0 / length
         return -1.0 * length * prob * math.log(prob) / math.log(2.0)
 

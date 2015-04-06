@@ -33,7 +33,7 @@ Debian based distributions the according package is called:
 
 .. _install-levenshtein:
 
-Levenshtein 
+Levenshtein
 ===========
 
 The included :class:`~password_policies.forms.PasswordPoliciesChangeForm` uses
@@ -42,7 +42,7 @@ the `Levenshtein Python C extension module`_.
 .. warning::
     The :class:`~password_policies.forms.PasswordPoliciesChangeForm` does not
     compare both the old and new password if the module is not installed.
-    
+
 On most linux distros it can simply be installed via a package manager. On
 Debian based distributions the according package is called:
 

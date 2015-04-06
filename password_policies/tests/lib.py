@@ -1,7 +1,7 @@
 from datetime import timedelta
 from random import randint
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from django.utils import timezone
 from django.test import TestCase
@@ -49,8 +49,8 @@ class BaseTest(TestCase):
         return super(BaseTest, self).tearDown()
 
 
-def create_user(username="alice", raw_password=None, date_joined=None,
-                last_login=None, commit=True):
+def create_user(username="alice", email="alice@example.com", raw_password=None,
+                date_joined=None, last_login=None, commit=True):
     """ Creates a non-staff user with dynamically generated properties.
 
 This function dynamically creates an user with following properties:
@@ -68,8 +68,7 @@ This function dynamically creates an user with following properties:
         date_joined = get_datetime_from_delta(timezone.now(), seconds)
     if not last_login:
         last_login = date_joined
-    user = User(username=username, is_active=True,
-                last_login=last_login, date_joined=date_joined)
+    user = get_user_model()(username=username, email=email, is_active=True, last_login=last_login, date_joined=date_joined)
     user.set_password(raw_password)
     if commit:
         user.save()

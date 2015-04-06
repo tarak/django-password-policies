@@ -2,6 +2,7 @@ from django.utils.encoding import force_unicode
 
 from password_policies.forms import PasswordPoliciesForm
 from password_policies.forms import PasswordPoliciesChangeForm
+from password_policies.forms import PasswordResetForm
 from password_policies.forms.fields import PasswordPoliciesField
 
 from password_policies.tests.lib import BaseTest
@@ -55,6 +56,16 @@ class PasswordPoliciesFieldTest(BaseTest):
                                {u'Ch\xc4d+pher9k': u'Ch\xc4d+pher9k'},
                                {u'\xc1\xc2\xc3\xc4\u0662\xc5\u20ac': [u'Ensure this value has at least 8 characters (it has 7).']},
                                field_kwargs={'min_length': 8})
+
+    def test_password_field_8(self):
+        self.assertFieldOutput(PasswordPoliciesField,
+                               {u'Ch\xc4d+pher9k': u'Ch\xc4d+pher9k'},
+                               {u'a': [u'The new password is based on a common sequence of characters.',
+                                       u'The new password must contain 3 or more letters.',
+                                       u'The new password must contain 1 or more number.',
+                                       u'The new password must contain 1 or more symbol.',
+                                       u'The new password is not varied enough.']}
+                               )
 
 
 class PasswordPoliciesFormTest(BaseTest):
@@ -116,4 +127,26 @@ class PasswordPoliciesChangeFormTest(BaseTest):
                 'new_password1': 'Chah+pher9k',
                 'new_password2': 'Chah+pher9k'}
         form = PasswordPoliciesChangeForm(self.user, data)
+        self.assertTrue(form.is_valid())
+
+
+class PasswordResetFormTest(BaseTest):
+
+    def setUp(self):
+        self.user = create_user()
+        return super(PasswordResetFormTest, self).setUp()
+
+    def test_unusable_password(self):
+        self.user.set_unusable_password()
+        self.user.save()
+        data = {'email': self.user.email}
+        form = PasswordResetForm(data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form["email"].errors,
+                         [force_unicode(form.error_messages['unusable'])])
+        self.assertFalse(form.is_valid())
+
+    def test_success(self):
+        data = {'email': self.user.email}
+        form = PasswordResetForm(data)
         self.assertTrue(form.is_valid())

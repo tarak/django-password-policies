@@ -8,6 +8,7 @@ Setuptools needs instructions how to interpret
 """
 import os
 import sys
+import django
 
 os.environ["DJANGO_SETTINGS_MODULE"] = 'password_policies.tests.settings'
 from password_policies.tests import settings
@@ -23,9 +24,16 @@ settings.INSTALLED_APPS = (
 )
 
 def run_tests(settings):
+    # Run Django setup (1.7+).
+    try:
+        django.setup()
+    except AttributeError:
+        pass  # This is Django < 1.7
     from django.test.utils import get_runner
     from django.utils.termcolors import colorize
+    from django.test.utils import setup_test_environment
     db_conf = settings.DATABASES['default']
+    setup_test_environment()
     output = []
     msg = "Starting tests for db backend: %s" % db_conf['ENGINE']
     embracer = '=' * len(msg)
@@ -53,4 +61,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

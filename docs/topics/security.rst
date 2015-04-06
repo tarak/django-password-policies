@@ -25,26 +25,26 @@ works:
   only these languages to use characters of "foreign" scripts is not really
   user friendly. The usage of unicode characters and especially numbers and
   symbols makes it hard enough to crack such a password.
-  
+
 * The minimum length of a password is the required number of letters, numbers
   and symbols. The :class:`~password_policies.forms.fields.PasswordPoliciesField` uses
   the :attr:`min_length` attribute, but the usage only makes sense if you want
   to, in example, enforce 3 letters, 1 number and 1 symbol in a password with
   a minimum length of 8 characters, which is the default, by the way...
-  
-* The maximum length for a password is not limited by default, but can easyily
+
+* The maximum length for a password is not limited by default, but can easily
   be set using :ref:`api-settings`.
 
 * Using the dictionary validator is basically opening a text file with a single
   word per line, reading ALL lines into memory and perform validation.
-  
+
   The same applies to the list of words specific to each project.
-  
+
   This slows down the validator depending of the sizes of lines or list entries.
-  
+
   Also note that the validator opens the text file each time it is called.
-  
-  Therefor the validator is disabled by default, but can easily be enabled in
+
+  Therefore, the validator is disabled by default, but can easily be enabled in
   each projects :ref:`api-settings`.
 
 * The validator using the `Python bindings for cracklib`_ does not handle

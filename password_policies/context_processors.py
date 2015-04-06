@@ -25,7 +25,7 @@ in a project's settings file::
 """
     d = {}
     if request.user.is_authenticated():
-        if not '_password_policies_change_required' in request.session:
+        if '_password_policies_change_required' not in request.session:
             r = PasswordHistory.objects.change_required(request.user)
         else:
             r = request.session['_password_policies_change_required']

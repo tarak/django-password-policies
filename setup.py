@@ -1,5 +1,13 @@
 from setuptools import setup, find_packages
 
+
+install_requires=['django>=1.5', 'django-easysettings', 'pytz']
+
+try:
+    import importlib
+except ImportError:
+    install_requires.append('importlib')
+
 setup(
     name='django-password-policies',
     version=__import__('password_policies').__version__,
@@ -26,8 +34,6 @@ and a mechanism to force password changes.
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Utilities'
     ],
-    install_requires=['django>=1.5,<=1.6',
-                      'django-easysettings',
-    ],
+    install_requires=install_requires,
     test_suite='tests.main',
 )

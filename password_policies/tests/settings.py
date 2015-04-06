@@ -65,6 +65,8 @@ TEMPLATE_DIRS = (
 
 SECRET_KEY = 'secret'
 
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,

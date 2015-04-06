@@ -54,6 +54,8 @@ Used by the :validator:`DictionaryValidator`.
     #: A value of 0 disables
     #: password similarity verification.
     PASSWORD_DIFFERENCE_DISTANCE = 3
+    #: Don't log the person out in the middle of a session. Only do the checks at login time.
+    PASSWORD_CHECK_ONLY_AT_LOGIN = False
     #: Determines after how many seconds a user is forced
     #: to change his/her password.
     #:

@@ -1,6 +1,5 @@
 # from datetime import datetime
 import re
-import calendar
 from datetime import timedelta
 from django.core.urlresolvers import resolve, reverse, NoReverseMatch, \
     Resolver404
@@ -8,7 +7,7 @@ from django.http import HttpResponseRedirect
 from django.utils import timezone
 
 from password_policies.conf import settings
-from password_policies.models import PasswordChangeRequired, PasswordHistory, PasswordProfile
+from password_policies.models import PasswordChangeRequired, PasswordHistory
 from password_policies.utils import PasswordCheck
 
 
@@ -53,26 +52,17 @@ To use this middleware you need to add it to the
     last = '_password_policies_last_changed'
     required = '_password_policies_change_required'
     td = timedelta(seconds=settings.PASSWORD_DURATION_SECONDS)
-    
-    def _is_older(self, datetime1, datetime2):
-        if self._to_unixts(datetime1) < self._to_unixts(datetime2):
-            return True
-        return False
-
-    def _to_unixts(self, datetime):
-        return int(calendar.timegm(datetime.utctimetuple()))
 
     def _check_history(self, request):
         if not request.session.get(self.last, None):
-            # TODO: Catch Exception!
-            newest = PasswordProfile.objects.get(request.user)
+            newest = PasswordHistory.objects.get_newest(request.user)
             if newest:
-                request.session[self.last] = newest.last_changed
+                request.session[self.last] = newest.created
             else:
                 # TODO: This relies on request.user.date_joined which might not
                 # be available!!!
-                request.session[self.last] = calendar.timegm(request.user.date_joined)
-        if self._is_older(request.session[self.last], self.expiry_datetime):
+                request.session[self.last] = request.user.date_joined
+        if request.session[self.last] < self.expiry_datetime:
             request.session[self.required] = True
             if not PasswordChangeRequired.objects.filter(user=request.user).count():
                 PasswordChangeRequired.objects.create(user=request.user)
@@ -80,24 +70,32 @@ To use this middleware you need to add it to the
             request.session[self.required] = False
 
     def _check_necessary(self, request):
+
         if not request.session.get(self.checked, None):
-            request.session[self.checked] = self._to_unixts(self.now)
-        # If a password change is enforced we won't check
-        # the user's password history, thus reducing DB hits...
-        if PasswordChangeRequired.objects.filter(user=request.user).count():
-            request.session[self.required] = True
-            return
-        if self._is_older(request.session[self.checked], self.expiry_datetime):
-        #if calendar.timegm(request.session[self.checked].utctimetuple()) < calendar.timegm(self.expiry_datetime.utctimetuple()):
-            try:
-                del request.session[self.last]
-                del request.session[self.checked]
-                del request.session[self.required]
-                del request.session[self.expired]
-            except KeyError:
-                pass
-        if settings.PASSWORD_USE_HISTORY:
-            self._check_history(request)
+            request.session[self.checked] = self.now
+
+            #  If the PASSWORD_CHECK_ONLY_AT_LOGIN is set, then only check at the beginning of session, which we can
+            #  tell by self.now time having just been set.
+        if not settings.PASSWORD_CHECK_ONLY_AT_LOGIN or request.session.get(self.checked, None) == self.now:
+            # If a password change is enforced we won't check
+            # the user's password history, thus reducing DB hits...
+            if PasswordChangeRequired.objects.filter(user=request.user).count():
+                request.session[self.required] = True
+                return
+            if request.session[self.checked] < self.expiry_datetime:
+                try:
+                    del request.session[self.last]
+                    del request.session[self.checked]
+                    del request.session[self.required]
+                    del request.session[self.expired]
+                except KeyError:
+                    pass
+            if settings.PASSWORD_USE_HISTORY:
+                self._check_history(request)
+        else:
+            # In the case where PASSWORD_CHECK_ONLY_AT_LOGIN is true, the required key is not removed,
+            # therefore causing a never ending password update loop
+            request.session[self.required] = False
 
     def _is_excluded_path(self, actual_path):
         paths = settings.PASSWORD_CHANGE_MIDDLEWARE_EXCLUDED_PATHS
@@ -117,7 +115,8 @@ To use this middleware you need to add it to the
             else:
                 paths.append(r'^%s$' % logout_url)
             try:
-                logout_url = resolve(u'/admin/logout/')
+                logout_url = u'/admin/logout/'
+                resolve(logout_url)
             except Resolver404:
                 pass
             else:

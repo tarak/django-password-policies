@@ -26,6 +26,6 @@ A form field that validates a password using :ref:`api-validators`.
                           validate_not_email]
 
     def __init__(self, *args, **kwargs):
-        if not "widget" in kwargs:
+        if "widget" not in kwargs:
             kwargs["widget"] = forms.PasswordInput(render_value=False)
         super(PasswordPoliciesField, self).__init__(*args, **kwargs)

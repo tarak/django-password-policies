@@ -21,16 +21,16 @@ Please note the following guidelines for contributing:
   and documentation.
 * If you write tests you should use the included BaseTest and use test
   fixtures::
-    
+
     from password_policies.tests.lib import BaseTest
-    
+
     class CustomTest(BaseTest):
 
         fixtures = ['django_password_policies_custom_fixtures.json']
 
         def test_something(self):
             pass
-        
+
 * Documentation must be formatted to be used with `Sphinx`_.
 
 .. _`PEP 8`: http://www.python.org/dev/peps/pep-0008/
