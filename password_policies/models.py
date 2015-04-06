@@ -14,6 +14,7 @@ Stores an entry to enforce password changes, related to :model:`auth.User`.
 
 Has the following fields:
 """
+
     created = models.DateTimeField(auto_now_add=True,
                                    verbose_name=_('created'), db_index=True,
                                    help_text=_('The date the entry was '
@@ -84,6 +85,7 @@ def create_password_profile_signal(sender, instance, created, **kwargs):
     if created:
         now = timezone.now()
         PasswordProfile.objects.create(user=instance, last_changed=now, created=now)
+
 
 def password_change_signal(sender, instance, **kwargs):
     user_model = get_user_model()
