@@ -157,7 +157,7 @@ msgid "Must change?"
 msgstr "Muss wechseln?"
 
 #: forms/validators.py:149
-msgid "The new password contains ambiguious bidirectional characters."
+msgid "The new password contains ambiguous bidirectional characters."
 msgstr "Das neue Passwort enthält mehrdeutige Zeichen."
 
 #: forms/validators.py:167

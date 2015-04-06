@@ -89,7 +89,7 @@ msgid "E-mail"
 msgstr "E-mail"
 
 #: forms/validators.py:152
-msgid "The new password contains ambiguious bidirectional characters."
+msgid "The new password contains ambiguous bidirectional characters."
 msgstr "Новый пароль содержит читаемые неоднозначно символы."
 
 #: forms/validators.py:171
