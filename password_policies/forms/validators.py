@@ -98,7 +98,7 @@ is greater than :py:attr:`~password_policies.conf.Settings.PASSWORD_MATCH_THRESH
             distance = self.fuzzy_substring(needle, haystack)
             longest = max(len(needle), len(haystack))
             similarity = (longest - distance) / longest
-            if similarity >= self.get_treshold():
+            if similarity >= self.get_threshold():
                 raise ValidationError(
                     self.message % {"haystacks": ", ".join(self.haystacks)},
                     code=self.code)
@@ -122,7 +122,7 @@ is greater than :py:attr:`~password_policies.conf.Settings.PASSWORD_MATCH_THRESH
             row1 = row2
         return min(row1)
 
-    def get_treshold(self):
+    def get_threshold(self):
         """
 :returns: :py:attr:`password_policies.conf.Settings.PASSWORD_MATCH_THRESHOLD`.
 """
