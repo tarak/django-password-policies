@@ -4,6 +4,9 @@ django-password-policies
 .. image:: https://travis-ci.org/tarak/django-password-policies.svg?branch=master
     :target: https://travis-ci.org/tarak/django-password-policies
 
+.. image:: https://coveralls.io/repos/tarak/django-password-policies/badge.svg?branch=master
+  :target: https://coveralls.io/r/tarak/django-password-policies?branch=master
+
 ``django-password-policies`` is an application for the `Django`_ framework that
 provides unicode-aware password policies on password changes and resets and a
 mechanism to force password changes.
