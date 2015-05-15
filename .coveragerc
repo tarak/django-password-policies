@@ -1,0 +1,3 @@
+[run]
+include = password_policies/*
+omit = password_policies/tests/*

@@ -17,9 +17,12 @@ install:
   - pip install -q Django==$DJANGO
   - if [[ $TRAVIS_PYTHON_VERSION == "2.6" ]]; then pip install importlib; fi
   - pip install pep8
+  - pip install coveralls
   - pip install django-easysettings
   - pip install -q -e .
 before_script:
   - "pep8 --ignore=E501,E225 password_policies"
 script:
-  - python setup.py test
+  - coverage run tests.py
+after_success:
+  coveralls
