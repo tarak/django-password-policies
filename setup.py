@@ -35,5 +35,5 @@ and a mechanism to force password changes.
         'Topic :: Utilities'
     ],
     install_requires=install_requires,
-    test_suite='tests.main',
+    test_suite='tests.runtests',
 )
