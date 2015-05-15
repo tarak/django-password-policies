@@ -1,63 +1,48 @@
-"""
-Unit tests runner for ``django-change-email``.
-Setuptools needs instructions how to interpret
-``test`` command when we run::
+#!/usr/bin/env python
 
-    python setup.py test
-
-"""
 import os
 import sys
+
 import django
+from django.conf import settings
+from django.utils.termcolors import colorize
 
-os.environ["DJANGO_SETTINGS_MODULE"] = 'password_policies.tests.settings'
-from password_policies.tests import settings
 
-settings.DJALOG_LEVEL = 40
-settings.INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.sessions',
-    'django.contrib.contenttypes',
-    'django.contrib.admin',
-    'django.contrib.sites',
-    'password_policies',
-)
+def runtests(*test_args):
+    """Setup and run django-password-policies test suite.
 
-def run_tests(settings):
-    # Run Django setup (1.7+).
+    This still uses the old django.test.simple.DjangoTestSuiteRunner for
+    compatibility reasons with older Django versions and because of the
+    abstract base classes which shouldn't be considered as tests, but are
+    discovered by the newer django.test.runner.DiscoverRunner.
+    """
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'password_policies.tests.settings'
+
+    parent = os.path.dirname(os.path.abspath(__file__))
+    sys.path.insert(0, parent)
+
     try:
         django.setup()
     except AttributeError:
-        pass  # This is Django < 1.7
-    from django.test.utils import get_runner
-    from django.utils.termcolors import colorize
-    from django.test.utils import setup_test_environment
-    db_conf = settings.DATABASES['default']
-    setup_test_environment()
-    output = []
-    msg = "Starting tests for db backend: %s" % db_conf['ENGINE']
-    embracer = '=' * len(msg)
-    output.append(msg)
-    for key, value in db_conf.iteritems():
-        if key == 'PASSWORD':
-            value = '****************'
-        line = '    %s: "%s"' % (key, value)
-        output.append(line)
-    embracer = colorize('=' * len(max(output, key=lambda s: len(s))),
-        fg='green', opts=['bold'])
-    output = [colorize(line, fg='blue') for line in output]
-    output.insert(0, embracer)
-    output.append(embracer)
-    print '\n'.join(output)
+        # Access one setting to trigger the initialization of the settings as
+        # workaround for older Django versions
+        settings.INSTALLED_APPS
 
-    TestRunner = get_runner(settings)
-    test_runner = TestRunner(interactive=False)
-    failures = test_runner.run_tests(['password_policies'])
-    return failures
+    try:
+        from django.test.runner import DiscoverRunner
+        potential_test_args = ['password_policies.tests']
+    except ImportError:
+        from django.test.simple import DjangoTestSuiteRunner
+        test_runner = DjangoTestSuiteRunner(interactive=False)
+        potential_test_args = ['password_policies']
+    else:
+        test_runner = DiscoverRunner(interactive=False)
 
-def main():
-    failures = run_tests(settings)
-    sys.exit(failures)
+    if not test_args:
+        test_args = potential_test_args
+    failures = test_runner.run_tests(test_args)
+    sys.exit(bool(failures))
+
 
 if __name__ == '__main__':
-    main()
+    runtests(*sys.argv[1:])
