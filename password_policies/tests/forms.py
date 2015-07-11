@@ -1,4 +1,4 @@
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_text
 
 from password_policies.forms import PasswordPoliciesForm
 from password_policies.forms import PasswordPoliciesChangeForm
@@ -81,7 +81,7 @@ class PasswordPoliciesFormTest(BaseTest):
         form = PasswordPoliciesForm(self.user, data)
         self.assertFalse(form.is_valid())
         self.assertEqual(form["new_password1"].errors,
-                         [force_unicode(form.error_messages['password_used'])])
+                         [force_text(form.error_messages['password_used'])])
 
     def test_password_mismatch(self):
         data = {'new_password1': 'Chah+pher9k',
@@ -89,7 +89,7 @@ class PasswordPoliciesFormTest(BaseTest):
         form = PasswordPoliciesForm(self.user, data)
         self.assertFalse(form.is_valid())
         self.assertEqual(form["new_password2"].errors,
-                         [force_unicode(form.error_messages['password_mismatch'])])
+                         [force_text(form.error_messages['password_mismatch'])])
 
     def test_password_verification_unicode(self):
         password = u'\xc1\u20ac\xc3\xc4\u0662\xc5\xc6\xc7'
@@ -119,7 +119,7 @@ class PasswordPoliciesChangeFormTest(BaseTest):
         form = PasswordPoliciesChangeForm(self.user, data)
         self.assertFalse(form.is_valid())
         self.assertEqual(form["old_password"].errors,
-                         [force_unicode(form.error_messages['password_incorrect'])])
+                         [force_text(form.error_messages['password_incorrect'])])
         self.assertFalse(form.is_valid())
 
     def test_success(self):
@@ -143,7 +143,7 @@ class PasswordResetFormTest(BaseTest):
         form = PasswordResetForm(data)
         self.assertFalse(form.is_valid())
         self.assertEqual(form["email"].errors,
-                         [force_unicode(form.error_messages['unusable'])])
+                         [force_text(form.error_messages['unusable'])])
         self.assertFalse(form.is_valid())
 
     def test_success(self):
