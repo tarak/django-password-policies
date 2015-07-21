@@ -1,7 +1,7 @@
 django-password-policies
 ========================
 
-|travis| |coverage| |requires| |latest-version| |downloads|
+|travis| |coverage| |landscape| |requires| |latest-version| |downloads|
 
 ``django-password-policies`` is an application for the `Django`_ framework that
 provides unicode-aware password policies on password changes and resets and a
@@ -11,6 +11,9 @@ mechanism to force password changes.
     :target: https://travis-ci.org/tarak/django-password-policies
 .. |coverage| image:: https://coveralls.io/repos/tarak/django-password-policies/badge.svg?branch=master
     :target: https://coveralls.io/r/tarak/django-password-policies?branch=master
+.. |landscape| image:: https://landscape.io/github/tarak/django-password-policies/master/landscape.svg?style=flat
+   :target: https://landscape.io/github/tarak/django-password-policies/master
+   :alt: Code Health
 .. |requires| image:: https://requires.io/github/tarak/django-password-policies/requirements.svg?branch=master
      :target: https://requires.io/github/tarak/django-password-policies/requirements/?branch=master
      :alt: Requirements Status
