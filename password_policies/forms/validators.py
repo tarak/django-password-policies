@@ -6,12 +6,21 @@ import re
 import stringprep
 
 from django.core.exceptions import ValidationError
-from django.utils.encoding import smart_unicode
+from django.utils.encoding import smart_text
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ungettext
 
 from password_policies.conf import settings
+
+try:
+    # Python 3 does not have an xrange, this will throw a NameError
+    xrange
+except NameError:
+    pass
+else:
+    # alias range to xrange for Python 2
+    range = xrange
 
 
 class BaseCountValidator(object):
@@ -114,9 +123,9 @@ is greater than :py:attr:`~password_policies.conf.Settings.PASSWORD_MATCH_THRESH
             return m
 
         row1 = [0] * (n + 1)
-        for i in xrange(0, m):
+        for i in range(0, m):
             row2 = [i + 1]
-            for j in xrange(0, n):
+            for j in range(0, n):
                 cost = (needle[i] != haystack[j])
                 row2.append(min(row1[j + 1] + 1, row2[j] + 1, row1[j] + cost))
             row1 = row2
@@ -240,7 +249,7 @@ Validates a given password using Python bindings for cracklib.
         crack.up_credit = self.up_credit
         try:
             crack.FascistCheck(value)
-        except ValueError, reason:
+        except ValueError as reason:
             reason = _(str(reason))
             message = _("Please choose a different password, %s." % reason)
             raise ValidationError(message, code=self.code)
@@ -351,7 +360,7 @@ Validates that a given password is not based on a dictionary word.
         if self.dictionary:
             with open(self.dictionary) as dictionary:
                 haystacks.extend(
-                    [smart_unicode(x.strip()) for x in dictionary.readlines()]
+                    [smart_text(x.strip()) for x in dictionary.readlines()]
                 )
         if self.words:
             haystacks.extend(self.words)
