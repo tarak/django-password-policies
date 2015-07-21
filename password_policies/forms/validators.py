@@ -154,7 +154,7 @@ For more information read `RFC 4013, section 2.3`_.
     #: The validator's error code.
     code = u"invalid_bidirectional"
     #: The validator's error message.
-    message = _("The new password contains ambiguious bidirectional characters.")
+    message = _("The new password contains ambiguous bidirectional characters.")
 
     def __call__(self, value):
         super(BidirectionalValidator, self).__call__(value)
