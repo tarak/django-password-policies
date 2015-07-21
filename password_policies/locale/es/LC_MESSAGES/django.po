@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-28 17:45+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-03-18 13:06+0100\n"
+"PO-Revision-Date: 2015-03-18 13:06+0100\n"
+"Last-Translator: Jesús Zoyo <jzoyo@apsl.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -18,83 +18,151 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: models.py:13
-msgid "password"
-msgstr ""
+#: admin.py:12
+msgid "Force password change for selected users"
+msgstr "Fuerza el cambio de contraseña para los usuarios seleccionados"
 
-#: models.py:14
-msgid "user"
-msgstr ""
-
-#: models.py:15
+#: models.py:15 models.py:38
 msgid "created"
-msgstr ""
+msgstr "creado"
 
-#: models.py:23
+#: models.py:16 models.py:39
+msgid "The date the entry was created."
+msgstr "La fecha en que se creó la entrada."
+
+#: models.py:19 models.py:43
+msgid "user"
+msgstr "usuario"
+
+#: models.py:20
+msgid "The user who needs to change his/her password."
+msgstr "El usuario que necesita cambiar su contraseña."
+
+#: models.py:27
+msgid "enforced password change"
+msgstr "cambio de contraseña forzada"
+
+#: models.py:28
+msgid "enforced password changes"
+msgstr "cambios de contraseña forzada"
+
+#: models.py:41
+msgid "password"
+msgstr "contraseña"
+
+#: models.py:42
+msgid "The encrypted password."
+msgstr "La contraseña cifrada."
+
+#: models.py:44
+msgid "The user this password history entry belongs to."
+msgstr "El usuario de esta entrada en el historial de contraseñas pertenece a."
+
+#: models.py:53
 msgid "password history entry"
-msgstr ""
+msgstr "entrada en el historial de contraseñas"
 
-#: models.py:24
+#: models.py:54
 msgid "password history entries"
-msgstr ""
+msgstr "entradas en el historial de contraseñas"
 
-#: forms/__init__.py:26
+#: forms/__init__.py:31 forms/__init__.py:268 forms/admin.py:17
 msgid "The two password fields didn't match."
-msgstr ""
+msgstr "Las dos contraseñas no son iguales."
 
-#: forms/__init__.py:27
+#: forms/__init__.py:32 forms/admin.py:18
 msgid "The new password was used before. Please enter another one."
-msgstr ""
+msgstr "La contraseña nueva fue usada antes. Por favor escriba otra nueva."
 
-#: forms/__init__.py:30
+#: forms/__init__.py:35
 msgid "New password"
-msgstr ""
+msgstr "Nueva contraseña"
 
-#: forms/__init__.py:33
+#: forms/__init__.py:38
 msgid "New password confirmation"
-msgstr ""
+msgstr "Confirmación de contraseña nueva"
 
-#: forms/__init__.py:96
+#: forms/__init__.py:104
 msgid "Your old password was entered incorrectly. Please enter it again."
-msgstr ""
+msgstr "Su contraseña anterior es incorrecta. Por favor, escríbala de nuevo"
 
-#: forms/__init__.py:98
+#: forms/__init__.py:106
 msgid "The old and the new password are too similar."
-msgstr ""
+msgstr "La contraseña anterior y la nueva son demasiado parecidas."
 
-#: forms/__init__.py:99
+#: forms/__init__.py:107
 msgid "The old and the new password are the same."
-msgstr ""
+msgstr "La contraseña anterior es la misma que la contraseña nueva"
 
-#: forms/__init__.py:101
+#: forms/__init__.py:109
 msgid "Old password"
-msgstr ""
+msgstr "Contraseña anterior"
 
-#: forms/__init__.py:150
+#: forms/__init__.py:169
 msgid ""
 "That e-mail address doesn't have an associated user account. Are you sure "
 "you've registered?"
 msgstr ""
+"Este e-mail no tiene una cuenta de usuario asociada. ¿Seguro que está "
+"registrado?"
 
-#: forms/__init__.py:152
+#: forms/__init__.py:171
 msgid ""
 "The user account associated with this e-mail address cannot reset the "
 "password."
 msgstr ""
+"La cuenta de usuario asociada a este e-mail no puede cambiar la contraseña."
 
-#: forms/__init__.py:155
+#: forms/__init__.py:175
 msgid "E-mail"
-msgstr ""
+msgstr "E-mail"
 
-#: forms/validators.py:152
+#: forms/__init__.py:267
+msgid "A user with that username already exists."
+msgstr "Ya existe un usuario con ese nombre de usuario."
+
+#: forms/__init__.py:270
+msgid "Username"
+msgstr "Nombre de usuario"
+
+#: forms/__init__.py:272
+msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr "Obligatorio. 30 caracteres o menos. Sólo letras, dígitos y @/./+/-/_"
+
+#: forms/__init__.py:273
+msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
+msgstr ""
+"Este valor sólo puede contener letras, números y los caracteres @/./+/-/_"
+
+#: forms/__init__.py:275
+msgid "Password"
+msgstr "Contraseña"
+
+#: forms/__init__.py:278
+msgid "Password confirmation"
+msgstr "Confirmación de contraseña"
+
+#: forms/__init__.py:280
+msgid "Enter the same password as above, for verification."
+msgstr "Introduzca la misma contraseña que el anterior, para verificación."
+
+#: forms/admin.py:21
+msgid "Password new"
+msgstr "Contraseña nueva"
+
+#: forms/admin.py:43
+msgid "Must change?"
+msgstr "¿Debe cambiar?"
+
+#: forms/validators.py:148
 msgid "The new password contains ambiguous bidirectional characters."
-msgstr ""
+msgstr "La contraseña nueva contiene caracteres bidireccionales ambiguos."
 
-#: forms/validators.py:171
+#: forms/validators.py:166
 msgid "The new password is based on a common sequence of characters."
-msgstr ""
+msgstr "La contraseña nueva está basada en una secuencia común de caracteres."
 
-#: forms/validators.py:189
+#: forms/validators.py:184
 #, python-format
 msgid ""
 "The new password contains consecutive characters. Only %(count)d consecutive "
@@ -103,46 +171,50 @@ msgid_plural ""
 "The new password contains consecutive characters. Only %(count)d consecutive "
 "characters are allowed."
 msgstr[0] ""
+"La contraseña nueva contiene caracteres consecutivos. Sólo se permite "
+"%(count)d carácter consecutivo."
 msgstr[1] ""
+"La contraseña nueva contiene caracteres consecutivos. Sólo se permite "
+"%(count)d caracteres consecutivos."
 
-#: forms/validators.py:250
+#: forms/validators.py:245
 #, python-format
 msgid "Please choose a different password, %s."
-msgstr ""
+msgstr "Por favor escoja una contraseña diferente, %s."
 
-#: forms/validators.py:279
+#: forms/validators.py:274
 msgid "The new password is not varied enough."
-msgstr ""
+msgstr "La contraseña nueva no es lo suficientemente variada."
 
-#: forms/validators.py:339
+#: forms/validators.py:336
 msgid "The new password is based on a dictionary word."
-msgstr ""
+msgstr "La contraseña nueva se basa en una palabra del diccionario."
 
-#: forms/validators.py:374
+#: forms/validators.py:371
 msgid "The new password contains invalid unicode characters."
-msgstr ""
+msgstr "La contraseña nueva contiene caractes unicode inválidos."
 
-#: forms/validators.py:411
+#: forms/validators.py:408
 #, python-format
 msgid "The new password must contain %d or more letter."
 msgid_plural "The new password must contain %d or more letters."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "La contraseña nueva debe contener %d o más letras."
+msgstr[1] "La contraseña nueva debe contener %d o más letras."
 
-#: forms/validators.py:430
+#: forms/validators.py:427
 msgid "The new password is similar to an email address."
-msgstr ""
+msgstr "La contraseña nueva es similar a una dirección de e-mail."
 
-#: forms/validators.py:466
+#: forms/validators.py:487
 #, python-format
 msgid "The new password must contain %d or more number."
 msgid_plural "The new password must contain %d or more numbers."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "La contraseña nueva debe contener %d o más números."
+msgstr[1] "La contraseña nueva debe contener %d o más números."
 
-#: forms/validators.py:519
+#: forms/validators.py:540
 #, python-format
 msgid "The new password must contain %d or more symbol."
 msgid_plural "The new password must contain %d or more symbols."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "La contraseña nueva debe contener %d o más símbolos."
+msgstr[1] "La contraseña nueva debe contener %d o más símbolos."
