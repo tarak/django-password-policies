@@ -17,7 +17,8 @@ try:
 except ImportError:
     from django.utils.datastructures import SortedDict
 
-from django.utils.http import int_to_base36
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
 from django.utils.translation import ugettext_lazy as _
 
 from password_policies.conf import settings
@@ -229,7 +230,7 @@ user.
             c['email'] = user.email
             c['signature'] = var[2]
             c['timestamp'] = var[1]
-            c['uid'] = int_to_base36(user.id)
+            c['uid'] = urlsafe_base64_encode(force_bytes(user.id))
             c['user'] = user
             subject = loader.render_to_string(subject_template_name, c)
             # Email subject *must not* contain newlines
