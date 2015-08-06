@@ -5,7 +5,8 @@ from django.core import signing
 from django.core.urlresolvers import reverse
 from django.shortcuts import resolve_url
 from django.utils.decorators import method_decorator
-from django.utils.http import base36_to_int
+from django.utils.encoding import force_text
+from django.utils.http import urlsafe_base64_decode
 from django.views.defaults import permission_denied
 from django.views.generic import TemplateView
 from django.views.generic.base import View
@@ -144,14 +145,14 @@ class PasswordResetConfirmView(LoggedOutMixin, FormView):
     # @method_decorator(sensitive_post_parameters)
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
-        self.uidb36 = args[0]
+        self.uidb64 = args[0]
         self.timestamp = args[1]
         self.signature = args[2]
         self.validlink = False
-        if self.uidb36 and self.timestamp and self.signature:
+        if self.uidb64 and self.timestamp and self.signature:
             try:
-                uid_int = base36_to_int(self.uidb36)
-                self.user = get_user_model().objects.get(id=uid_int)
+                uid = force_text(urlsafe_base64_decode(self.uidb64))
+                self.user = get_user_model().objects.get(id=uid)
             except (ValueError, get_user_model().DoesNotExist):
                 self.user = None
             else:
