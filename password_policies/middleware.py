@@ -140,7 +140,7 @@ To use this middleware you need to add it to the
         if request.method != 'GET':
             return
         try:
-            resolve(request.path)
+            resolve(request.path_info)
         except Resolver404:
             return
         self.now = timezone.now()
