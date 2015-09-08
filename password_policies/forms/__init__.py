@@ -93,11 +93,11 @@ is set to ``True``.
         self.user.set_password(new_password)
         if commit:
             self.user.save()
-        if settings.PASSWORD_USE_HISTORY:
-            password = make_password(new_password)
-            PasswordHistory.objects.create(password=password, user=self.user)
-            PasswordHistory.objects.delete_expired(self.user)
-        PasswordChangeRequired.objects.filter(user=self.user).delete()
+            if settings.PASSWORD_USE_HISTORY:
+                password = make_password(new_password)
+                PasswordHistory.objects.create(password=password, user=self.user)
+                PasswordHistory.objects.delete_expired(self.user)
+            PasswordChangeRequired.objects.filter(user=self.user).delete()
         return self.user
 
 
@@ -155,7 +155,8 @@ Validates that old and new password are not too similar.
     def save(self, commit=True):
         user = super(PasswordPoliciesChangeForm, self).save(commit=commit)
         try:
-            if user.password_change_required:
+            # Checking the object id to prevent AssertionError id is None when deleting.
+            if user.password_change_required and user.password_change_required.id:
                 user.password_change_required.delete()
         except ObjectDoesNotExist:
             pass
