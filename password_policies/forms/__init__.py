@@ -155,6 +155,7 @@ Validates that old and new password are not too similar.
     def save(self, commit=True):
         user = super(PasswordPoliciesChangeForm, self).save(commit=commit)
         try:
+            # Checking the object id to prevent AssertionError id is None when deleting.
             if user.password_change_required and user.password_change_required.id:
                 user.password_change_required.delete()
         except ObjectDoesNotExist:
