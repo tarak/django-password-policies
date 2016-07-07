@@ -33,7 +33,6 @@ This application requires
 
 * `Django`_ 1.7 or newer
 * `django-easysettings`_
-* `pytz`_
 
 .. _documentation:
 
@@ -45,4 +44,3 @@ A detailled documentation is available on `the project's GitHub Pages`_.
 .. _`the project's GitHub Pages`: http://tarak.github.com/django-password-policies
 .. _`Django`: https://www.djangoproject.com/
 .. _`django-easysettings`: https://github.com/SmileyChris/django-easysettings
-.. _`pytz`: http://pythonhosted.org/pytz/

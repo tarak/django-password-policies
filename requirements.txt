@@ -1,3 +1,2 @@
-django>=1.7,<1.9
+django>=1.7,<1.10
 django-easysettings>=1.0
-pytz

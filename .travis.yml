@@ -5,14 +5,14 @@ python:
   - "3.3"
   - "3.4"
 env:
-  - DJANGO="1.7.10"
-  - DJANGO="1.8.6"
+  - DJANGO="1.7"
+  - DJANGO="1.8"
+  - DJANGO="1.9"
 install:
   - pip install -q Django==$DJANGO
   - pip install pep8
   - pip install coveralls
   - pip install django-easysettings
-  - pip install pytz
   - pip install -q -e .
 before_script:
   - "pep8 --ignore=E501,E225 password_policies"

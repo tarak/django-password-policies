@@ -29,7 +29,7 @@ For bugfixing and feature requests please read:
 
 * **Support:**
   :doc:`Getting help <topics/support>`
-  
+
 To participate in the development of this application please read:
 
 * **Development:**
@@ -38,5 +38,5 @@ To participate in the development of this application please read:
   :doc:`Contributing <topics/contributing>` |
   :doc:`Internationalization <topics/internationalization>` |
   :doc:`License <license>`
-  
+
 .. _`Django`: https://www.djangoproject.com/

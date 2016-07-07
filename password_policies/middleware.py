@@ -1,4 +1,3 @@
-# from datetime import datetime
 import re
 from datetime import timedelta
 from django.core.urlresolvers import resolve, reverse, NoReverseMatch, \

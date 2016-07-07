@@ -13,7 +13,6 @@ This application requires
 
 * `Django`_ 1.7 or newer
 * `django-easysettings`_
-* `pytz`_
 
 .. _install-cracklib:
 
@@ -100,6 +99,5 @@ inside the Python path::
 
 .. _`Django`: https://www.djangoproject.com/
 .. _`django-easysettings`: https://github.com/SmileyChris/django-easysettings
-.. _`pytz`: http://pythonhosted.org/pytz/
 .. _`Python bindings for cracklib`: http://www.nongnu.org/python-crack/
 .. _`Levenshtein Python C extension module`: https://github.com/miohtama/python-Levenshtein

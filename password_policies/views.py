@@ -13,7 +13,6 @@ from django.views.generic.base import View
 from django.views.generic.edit import FormView
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
-from django.views.decorators.debug import sensitive_post_parameters
 
 from password_policies.conf import settings
 from password_policies.forms import PasswordPoliciesForm

@@ -12,7 +12,7 @@ Table of contents
     :hidden:
 
     index
-    
+
 .. toctree::
     :maxdepth: 3
 
