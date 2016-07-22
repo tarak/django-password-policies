@@ -107,7 +107,7 @@ if set, otherwise the URL to the :class:`PasswordChangeDoneView`.
 
     def get_context_data(self, **kwargs):
         name = self.redirect_field_name
-        kwargs[name] = self.request.REQUEST.get(name, '')
+        kwargs[name] = self.request.GET.get(name, '')
         return super(PasswordChangeFormView, self).get_context_data(**kwargs)
 
 
