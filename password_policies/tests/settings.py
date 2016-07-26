@@ -26,7 +26,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
+# TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
 
 DATABASES = {
     'default': {
@@ -81,10 +81,6 @@ LOGGING = {
     'filters': {
     },
     'handlers': {
-        'null': {
-            'level': 'DEBUG',
-            'class': 'django.utils.log.NullHandler',
-        },
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
@@ -92,20 +88,10 @@ LOGGING = {
         },
     },
     'loggers': {
-        'django': {
-            'handlers': ['null'],
-            'propagate': True,
-            'level': 'INFO',
-        },
         'django.request': {
             'handlers': ['console'],
             'level': 'ERROR',
             'propagate': False,
         },
-        'password_policies.views': {
-            'handlers': ['null'],
-            'level': 'INFO',
-            'propagate': False,
-        }
     }
 }

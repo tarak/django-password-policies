@@ -1,6 +1,6 @@
 from django.conf.urls import include, patterns, url
 
-from password_policies.tests.test_views import TestHomeView
+from password_policies.tests.views import TestHomeView
 
 
 urlpatterns = patterns('',

@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 
-install_requires = ['django>1.6', 'django-easysettings']
+install_requires = ['django>=1.7', 'django-easysettings']
 
 setup(
     name='django-password-policies',
