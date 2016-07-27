@@ -18,7 +18,6 @@ class PasswordChangeViewsTestCase(BaseTest):
         """
         A ``GET`` to the ``password_change`` view uses the appropriate
         template and populates the password change form into the context.
-
         """
         self.client.login(username='alice', password=passwords[-1])
         response = self.client.get(reverse('password_change'))
@@ -33,7 +32,6 @@ class PasswordChangeViewsTestCase(BaseTest):
         """
         A ``POST`` to the ``password_change`` view with invalid data properly
         fails and issues the according error.
-
         """
         data = {
             'old_password': 'password',
@@ -54,7 +52,6 @@ class PasswordChangeViewsTestCase(BaseTest):
         A ``POST`` to the ``change_email_create`` view with valid data properly
         changes the user's password, creates a new password history entry
         for the user and issues a redirect.
-
         """
         data = {'old_password': passwords[-1],
                 'new_password1': 'Chah+pher9k',

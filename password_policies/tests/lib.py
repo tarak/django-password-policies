@@ -52,7 +52,6 @@ class BaseTest(TestCase):
 def create_user(username="alice", email="alice@example.com", raw_password=None,
                 date_joined=None, last_login=None, commit=True):
     """ Creates a non-staff user with dynamically generated properties.
-
 This function dynamically creates an user with following properties:
 - The user is neither an admin nor a staff member.
 - The user is active.

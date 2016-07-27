@@ -13,20 +13,16 @@ USE_TZ = False
 # to load the internationalization machinery.
 USE_I18N = True
 
-INSTALLED_APPS = (
+SECRET_KEY = 'fake-key'
+
+INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'password_policies',
-)
-
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-)
-
-# TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
+    "password_policies",
+]
 
 DATABASES = {
     'default': {
@@ -38,6 +34,14 @@ DATABASES = {
         'PORT': '',
     },
 }
+
+ROOT_URLCONF = 'password_policies.tests.urls'
+
+SITE_ID = 1
+
+TEMPLATE_DIRS = (
+    os.path.join(os.path.dirname(__file__), 'templates'),
+)
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -56,42 +60,4 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'password_policies.context_processors.password_status',
 )
 
-ROOT_URLCONF = 'password_policies.tests.urls'
-SITE_ID = 1
-
-TEMPLATE_DIRS = (
-    os.path.join(os.path.dirname(__file__), 'templates'),
-)
-
-SECRET_KEY = 'secret'
-
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-    },
-    'filters': {
-    },
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple'
-        },
-    },
-    'loggers': {
-        'django.request': {
-            'handlers': ['console'],
-            'level': 'ERROR',
-            'propagate': False,
-        },
-    }
-}
