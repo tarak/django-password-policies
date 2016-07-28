@@ -1,22 +1,21 @@
 language: python
-sudo: false
-python:
-  - "2.7"
-  - "3.3"
-  - "3.4"
+python: 3.5
 env:
-  - DJANGO="1.7"
-  - DJANGO="1.8"
-  - DJANGO="1.9"
+  - TOX_ENV=py27-17
+  - TOX_ENV=py27-18
+  - TOX_ENV=py27-19
+  - TOX_ENV=py33-17
+  - TOX_ENV=py33-18
+  - TOX_ENV=py34-17
+  - TOX_ENV=py34-18
+  - TOX_ENV=py34-19
+  - TOX_ENV=py35-18
+  - TOX_ENV=py35-19
+# command to install dependencies
 install:
-  - pip install -q Django==$DJANGO
-  - pip install pep8
-  - pip install coveralls
-  - pip install django-easysettings
-  - pip install -q -e .
-before_script:
-  - "pep8 --ignore=E501,E225 password_policies"
+  - pip install tox
+# command to run tests
 script:
-  - coverage run tests.py
-after_success:
-  coveralls
+  - tox -e $TOX_ENV
+# containers
+sudo: false
