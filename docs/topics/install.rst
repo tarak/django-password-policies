@@ -29,7 +29,7 @@ the `Python bindings for cracklib`_ need to be installed.
 On most linux distros it can simply be installed via a package manager. On
 Debian based distributions the according package is called:
 
-* python-crack
+* python-cracklib
 
 .. _install-levenshtein:
 
