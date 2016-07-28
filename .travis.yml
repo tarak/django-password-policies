@@ -10,7 +10,7 @@ env:
   - DJANGO=">= 1.8,<1.9"
   - DJANGO=">= 1.9,<1.10"
 install:
-  - pip install -q Django==$DJANGO
+  - pip install -q Django$DJANGO
   - pip install pep8
   - pip install coveralls
   - pip install django-easysettings
