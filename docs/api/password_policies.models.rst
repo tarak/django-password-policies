@@ -9,7 +9,7 @@ Models
 .. model:: PasswordChangeRequired
 
 ``PasswordChangeRequired``
--------------------
+--------------------------
 
 .. autoclass:: password_policies.models.PasswordChangeRequired
    :members:
