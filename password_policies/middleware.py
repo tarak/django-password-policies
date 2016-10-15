@@ -97,7 +97,7 @@ To use this middleware you need to add it to the
             request.session[self.required] = False
 
     def _is_excluded_path(self, actual_path):
-        paths = settings.PASSWORD_CHANGE_MIDDLEWARE_EXCLUDED_PATHS
+        paths = settings.PASSWORD_CHANGE_MIDDLEWARE_EXCLUDED_PATHS[:]
         path = r'^%s$' % self.url
         paths.append(path)
         media_url = settings.MEDIA_URL
